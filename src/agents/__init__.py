@@ -1,5 +1,6 @@
 """LLM-based analysis agents."""
 
+from src.agents.analyzer import AnalysisError, TradeAnalyzer
 from src.agents.llm_client import (
     LLMClient,
     LLMError,
@@ -26,6 +27,7 @@ from src.agents.response_parser import (
 
 __all__ = [
     "SYSTEM_PROMPT",
+    "AnalysisError",
     "LLMClient",
     "LLMError",
     "LLMProviderError",
@@ -34,6 +36,7 @@ __all__ = [
     "LLMTimeoutError",
     "PromptVariant",
     "ResponseParseError",
+    "TradeAnalyzer",
     "build_analysis_prompt",
     "build_batch_prompt",
     "estimate_prompt_tokens",
