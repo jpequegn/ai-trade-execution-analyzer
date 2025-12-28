@@ -96,6 +96,7 @@ files = ["src"]
 module = [
     "langfuse.*",
     "langgraph.*",
+    "pytest.*",
 ]
 ignore_missing_imports = true
 
