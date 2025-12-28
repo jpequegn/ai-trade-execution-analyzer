@@ -66,6 +66,7 @@ select = [
 ignore = [
     "E501",   # line too long (handled by formatter)
     "B008",   # do not perform function calls in argument defaults
+    "ARG002", # unused method argument (used for API compatibility)
 ]
 
 [tool.ruff.lint.isort]
@@ -81,7 +82,7 @@ line-ending = "auto"
 python_version = "3.11"
 strict = true
 warn_return_any = true
-warn_unused_ignores = true
+warn_unused_ignores = false
 disallow_untyped_defs = true
 disallow_incomplete_defs = true
 check_untyped_defs = true
@@ -94,6 +95,8 @@ files = ["src"]
 
 [[tool.mypy.overrides]]
 module = [
+    "anthropic.*",
+    "openai.*",
     "langfuse.*",
     "langgraph.*",
     "pytest.*",
