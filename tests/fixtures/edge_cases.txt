@@ -1,0 +1,32 @@
+# Edge case FIX messages for special scenario testing
+# Format: description|message
+
+# Unicode in symbol (should work - gets uppercased)
+unicode_symbol|37=ORD|55=αβγ|54=1|32=100|31=150|60=20240115-10:00:00
+
+# Very long order ID
+long_order_id|37=ORD-2024-01-15-VERY-LONG-ORDER-IDENTIFIER-12345678901234567890|55=AAPL|54=1|32=100|31=150|60=20240115-10:00:00
+
+# Zero quantity (edge - should validate or fail based on model)
+zero_quantity|37=ORD|55=AAPL|54=1|32=0|31=150|60=20240115-10:00:00
+
+# Very small price (penny stocks)
+penny_stock|37=ORD|55=PENNY|54=1|32=10000|31=0.0001|60=20240115-10:00:00
+
+# Duplicate tags (last should win)
+duplicate_tags|37=ORD1|55=AAPL|54=1|32=100|31=150|60=20240115-10:00:00|37=ORD2
+
+# Unknown tags mixed in
+unknown_tags|37=ORD|55=AAPL|54=1|32=100|31=150|60=20240115-10:00:00|9999=unknown|8888=value
+
+# Value with equals sign
+equals_in_value|37=ORD|55=AAPL|54=1|32=100|31=150|60=20240115-10:00:00|58=Reason=test
+
+# Message with trailing delimiter
+trailing_delimiter|37=ORD|55=AAPL|54=1|32=100|31=150|60=20240115-10:00:00|
+
+# Message with leading delimiter
+leading_delimiter||37=ORD|55=AAPL|54=1|32=100|31=150|60=20240115-10:00:00
+
+# Mixed SOH and pipe (unlikely but possible)
+mixed_delimiters|37=ORD	55=AAPL|54=1	32=100|31=150|60=20240115-10:00:00

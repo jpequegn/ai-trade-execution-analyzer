@@ -1,6 +1,8 @@
 """Comprehensive tests for FIX protocol parser."""
 
+import time
 from datetime import datetime
+from pathlib import Path
 
 import pytest
 
@@ -12,6 +14,9 @@ from src.parsers import (
     parse_fix_message,
     tokenize_fix_message,
 )
+
+# Path to test fixtures
+FIXTURES_DIR = Path(__file__).parent / "fixtures"
 
 
 class TestTokenizeFixMessage:
@@ -409,3 +414,371 @@ class TestEdgeCases:
         assert result.timestamp.hour == 23
         assert result.timestamp.minute == 59
         assert result.timestamp.second == 59
+
+    def test_unicode_in_symbol(self) -> None:
+        """Test that unicode characters in symbol are handled."""
+        msg = "37=ORD|55=αβγ|54=1|32=100|31=150|60=20240115-10:00:00"
+        result = parse_fix_message(msg)
+        assert result.symbol == "ΑΒΓ"  # Uppercased Greek letters
+
+    def test_very_long_order_id(self) -> None:
+        """Test parsing a very long order ID."""
+        long_id = "ORD-" + "X" * 100
+        msg = f"37={long_id}|55=AAPL|54=1|32=100|31=150|60=20240115-10:00:00"
+        result = parse_fix_message(msg)
+        assert result.order_id == long_id
+
+    def test_trailing_delimiter(self) -> None:
+        """Test parsing message with trailing delimiter."""
+        msg = "37=ORD|55=AAPL|54=1|32=100|31=150|60=20240115-10:00:00|"
+        result = parse_fix_message(msg)
+        assert result.order_id == "ORD"
+
+    def test_leading_delimiter(self) -> None:
+        """Test parsing message with leading delimiter."""
+        msg = "|37=ORD|55=AAPL|54=1|32=100|31=150|60=20240115-10:00:00"
+        result = parse_fix_message(msg)
+        assert result.order_id == "ORD"
+
+    def test_penny_stock_price(self) -> None:
+        """Test parsing very small (penny stock) prices."""
+        msg = "37=ORD|55=PENNY|54=1|32=10000|31=0.0001|60=20240115-10:00:00"
+        result = parse_fix_message(msg)
+        assert result.price == 0.0001
+
+
+class TestParameterizedParsing:
+    """Parameterized tests for efficient test coverage."""
+
+    @pytest.mark.parametrize(
+        "side_code,expected_side",
+        [
+            ("1", "BUY"),
+            ("2", "SELL"),
+        ],
+    )
+    def test_side_parsing(self, side_code: str, expected_side: str) -> None:
+        """Test side field parsing with parameterized values."""
+        msg = f"37=ORD|55=AAPL|54={side_code}|32=100|31=150|60=20240115-10:00:00"
+        result = parse_fix_message(msg)
+        assert result.side == expected_side
+
+    @pytest.mark.parametrize(
+        "ord_status,expected_fill_type",
+        [
+            ("1", "PARTIAL"),
+            ("2", "FULL"),
+            ("0", "PARTIAL"),  # New order defaults to PARTIAL
+        ],
+    )
+    def test_fill_type_parsing(self, ord_status: str, expected_fill_type: str) -> None:
+        """Test fill type determination with parameterized values."""
+        msg = f"37=ORD|55=AAPL|54=1|32=100|31=150|60=20240115-10:00:00|39={ord_status}"
+        result = parse_fix_message(msg)
+        assert result.fill_type == expected_fill_type
+
+    @pytest.mark.parametrize(
+        "fix_version",
+        ["FIX.4.2", "FIX.4.4", "FIX.5.0"],
+    )
+    def test_fix_version_parsing(self, fix_version: str) -> None:
+        """Test FIX version parsing with parameterized values."""
+        msg = f"8={fix_version}|37=ORD|55=AAPL|54=1|32=100|31=150|60=20240115-10:00:00"
+        result = parse_fix_message(msg)
+        assert result.fix_version == fix_version
+
+    @pytest.mark.parametrize(
+        "timestamp,expected_hour,expected_minute",
+        [
+            ("20240115-09:30:00.000", 9, 30),
+            ("20240115-16:00:00", 16, 0),
+            ("20240115-00:00:00.000", 0, 0),
+            ("20240115-23:59:59.999", 23, 59),
+        ],
+    )
+    def test_timestamp_parsing(
+        self, timestamp: str, expected_hour: int, expected_minute: int
+    ) -> None:
+        """Test timestamp parsing with parameterized values."""
+        msg = f"37=ORD|55=AAPL|54=1|32=100|31=150|60={timestamp}"
+        result = parse_fix_message(msg)
+        assert result.timestamp.hour == expected_hour
+        assert result.timestamp.minute == expected_minute
+
+    @pytest.mark.parametrize(
+        "missing_tag,error_field_tag",
+        [
+            ("order_id", 37),
+            ("symbol", 55),
+            ("side", 54),
+            ("quantity", 32),
+            ("price", 31),
+            ("timestamp", 60),
+        ],
+    )
+    def test_missing_required_fields(self, missing_tag: str, error_field_tag: int) -> None:
+        """Test that missing required fields raise appropriate errors."""
+        base_fields = {
+            "order_id": "37=ORD",
+            "symbol": "55=AAPL",
+            "side": "54=1",
+            "quantity": "32=100",
+            "price": "31=150",
+            "timestamp": "60=20240115-10:00:00",
+        }
+        # Remove the field being tested
+        del base_fields[missing_tag]
+        msg = "|".join(base_fields.values())
+
+        with pytest.raises(FIXMissingFieldError) as exc_info:
+            parse_fix_message(msg)
+        assert exc_info.value.field_tag == error_field_tag
+
+
+class TestFixtureBasedParsing:
+    """Tests using fixture files."""
+
+    def test_valid_messages_from_fixture(self) -> None:
+        """Test parsing all valid messages from fixture file."""
+        fixture_path = FIXTURES_DIR / "valid_messages.txt"
+        if not fixture_path.exists():
+            pytest.skip("Fixture file not found")
+
+        with fixture_path.open() as f:
+            for line in f:
+                line = line.strip()
+                if not line or line.startswith("#"):
+                    continue
+
+                # Replace tab with SOH for SOH delimiter tests
+                line = line.replace("\t", "\x01")
+
+                result = parse_fix_message(line)
+                assert isinstance(result, ExecutionReport)
+                assert result.order_id
+                assert result.symbol
+                assert result.quantity > 0
+                assert result.price > 0
+
+
+class TestPerformance:
+    """Performance tests for parser."""
+
+    def test_parse_1000_messages_under_1_second(self) -> None:
+        """Test that parsing 1000 messages takes less than 1 second."""
+        msg = (
+            "8=FIX.4.4|35=8|37=ORD001|55=AAPL|54=1|32=100|31=150.50|"
+            "30=NYSE|60=20240115-10:30:00.000|39=2|150=F|14=100|6=150.50"
+        )
+
+        start_time = time.perf_counter()
+        for _ in range(1000):
+            parse_fix_message(msg)
+        elapsed = time.perf_counter() - start_time
+
+        assert elapsed < 1.0, f"Parsing 1000 messages took {elapsed:.2f}s, expected < 1s"
+
+    def test_tokenize_1000_messages_performance(self) -> None:
+        """Test tokenization performance."""
+        msg = (
+            "8=FIX.4.4|35=8|37=ORD001|55=AAPL|54=1|32=100|31=150.50|"
+            "30=NYSE|60=20240115-10:30:00.000|39=2|150=F|14=100|6=150.50"
+        )
+
+        start_time = time.perf_counter()
+        for _ in range(1000):
+            tokenize_fix_message(msg)
+        elapsed = time.perf_counter() - start_time
+
+        assert elapsed < 0.5, f"Tokenizing 1000 messages took {elapsed:.2f}s, expected < 0.5s"
+
+    def test_large_batch_parsing(self) -> None:
+        """Test parsing a large batch of messages."""
+        messages = [
+            f"37=ORD{i:04d}|55=AAPL|54={1 if i % 2 == 0 else 2}|32={100 + i}|31={150.0 + i * 0.1:.2f}|60=20240115-10:00:00"
+            for i in range(100)
+        ]
+
+        start_time = time.perf_counter()
+        results = [parse_fix_message(msg) for msg in messages]
+        elapsed = time.perf_counter() - start_time
+
+        assert len(results) == 100
+        assert elapsed < 0.1, f"Parsing 100 messages took {elapsed:.2f}s, expected < 0.1s"
+
+
+class TestModelSerialization:
+    """Tests for model serialization and deserialization."""
+
+    def test_execution_report_to_dict(self) -> None:
+        """Test converting ExecutionReport to dictionary."""
+        report = ExecutionReport(
+            order_id="ORD001",
+            symbol="AAPL",
+            side="BUY",
+            quantity=100.0,
+            price=150.50,
+            venue="NYSE",
+            timestamp=datetime(2024, 1, 15, 10, 30, 0),
+            fill_type="FULL",
+        )
+
+        data = report.model_dump()
+        assert data["order_id"] == "ORD001"
+        assert data["symbol"] == "AAPL"
+        assert data["side"] == "BUY"
+        assert data["quantity"] == 100.0
+        assert data["price"] == 150.50
+
+    def test_execution_report_to_json(self) -> None:
+        """Test converting ExecutionReport to JSON."""
+        report = ExecutionReport(
+            order_id="ORD001",
+            symbol="AAPL",
+            side="BUY",
+            quantity=100.0,
+            price=150.50,
+            venue="NYSE",
+            timestamp=datetime(2024, 1, 15, 10, 30, 0),
+            fill_type="FULL",
+        )
+
+        json_str = report.model_dump_json()
+        assert "ORD001" in json_str
+        assert "AAPL" in json_str
+
+    def test_execution_report_roundtrip(self) -> None:
+        """Test serialization and deserialization roundtrip."""
+        original = ExecutionReport(
+            order_id="ORD001",
+            symbol="AAPL",
+            side="BUY",
+            quantity=100.0,
+            price=150.50,
+            venue="NYSE",
+            timestamp=datetime(2024, 1, 15, 10, 30, 0),
+            fill_type="FULL",
+            exec_type="F",
+            cum_qty=100.0,
+            avg_px=150.50,
+            fix_version="FIX.4.4",
+        )
+
+        json_str = original.model_dump_json()
+        restored = ExecutionReport.model_validate_json(json_str)
+
+        assert restored.order_id == original.order_id
+        assert restored.symbol == original.symbol
+        assert restored.side == original.side
+        assert restored.quantity == original.quantity
+        assert restored.price == original.price
+        assert restored.timestamp == original.timestamp
+
+
+class TestExecutionReportValidation:
+    """Additional validation tests for ExecutionReport model."""
+
+    def test_zero_quantity_raises_error(self) -> None:
+        """Test that zero quantity raises ValidationError."""
+        with pytest.raises(ValueError):
+            ExecutionReport(
+                order_id="ORD001",
+                symbol="AAPL",
+                side="BUY",
+                quantity=0.0,
+                price=150.50,
+                venue="NYSE",
+                timestamp=datetime(2024, 1, 15, 10, 30, 0),
+                fill_type="FULL",
+            )
+
+    def test_zero_price_raises_error(self) -> None:
+        """Test that zero price raises ValidationError."""
+        with pytest.raises(ValueError):
+            ExecutionReport(
+                order_id="ORD001",
+                symbol="AAPL",
+                side="BUY",
+                quantity=100.0,
+                price=0.0,
+                venue="NYSE",
+                timestamp=datetime(2024, 1, 15, 10, 30, 0),
+                fill_type="FULL",
+            )
+
+    def test_empty_symbol_raises_error(self) -> None:
+        """Test that empty symbol raises ValidationError."""
+        with pytest.raises(ValueError):
+            ExecutionReport(
+                order_id="ORD001",
+                symbol="",
+                side="BUY",
+                quantity=100.0,
+                price=150.50,
+                venue="NYSE",
+                timestamp=datetime(2024, 1, 15, 10, 30, 0),
+                fill_type="FULL",
+            )
+
+    def test_invalid_fill_type_raises_error(self) -> None:
+        """Test that invalid fill_type raises ValidationError."""
+        with pytest.raises(ValueError):
+            ExecutionReport(
+                order_id="ORD001",
+                symbol="AAPL",
+                side="BUY",
+                quantity=100.0,
+                price=150.50,
+                venue="NYSE",
+                timestamp=datetime(2024, 1, 15, 10, 30, 0),
+                fill_type="INVALID",  # type: ignore[arg-type]
+            )
+
+    def test_optional_fields_can_be_none(self) -> None:
+        """Test that optional fields can be None."""
+        report = ExecutionReport(
+            order_id="ORD001",
+            symbol="AAPL",
+            side="BUY",
+            quantity=100.0,
+            price=150.50,
+            venue="NYSE",
+            timestamp=datetime(2024, 1, 15, 10, 30, 0),
+            fill_type="FULL",
+            exec_type=None,
+            cum_qty=None,
+            avg_px=None,
+        )
+        assert report.exec_type is None
+        assert report.cum_qty is None
+        assert report.avg_px is None
+
+    def test_negative_cum_qty_raises_error(self) -> None:
+        """Test that negative cum_qty raises ValidationError."""
+        with pytest.raises(ValueError):
+            ExecutionReport(
+                order_id="ORD001",
+                symbol="AAPL",
+                side="BUY",
+                quantity=100.0,
+                price=150.50,
+                venue="NYSE",
+                timestamp=datetime(2024, 1, 15, 10, 30, 0),
+                fill_type="FULL",
+                cum_qty=-50.0,
+            )
+
+    def test_negative_avg_px_raises_error(self) -> None:
+        """Test that negative avg_px raises ValidationError."""
+        with pytest.raises(ValueError):
+            ExecutionReport(
+                order_id="ORD001",
+                symbol="AAPL",
+                side="BUY",
+                quantity=100.0,
+                price=150.50,
+                venue="NYSE",
+                timestamp=datetime(2024, 1, 15, 10, 30, 0),
+                fill_type="FULL",
+                avg_px=-150.50,
+            )
