@@ -1,0 +1,1858 @@
+{
+  "version": "1.0.0",
+  "description": "Expert-annotated ground truth dataset for trade execution analysis evaluation",
+  "samples": [
+    {
+      "id": "GT001",
+      "fix_message": "8=FIX.4.4|35=8|37=ORD001|55=AAPL|54=1|32=1000|31=185.50|30=NYSE|60=20240115-10:30:00.000|39=2",
+      "execution": {
+        "order_id": "ORD001",
+        "symbol": "AAPL",
+        "side": "BUY",
+        "quantity": 1000.0,
+        "price": 185.5,
+        "venue": "NYSE",
+        "timestamp": "2024-01-15T10:30:00",
+        "fill_type": "FULL"
+      },
+      "expert_analysis": {
+        "quality_score": 9,
+        "key_issues": [],
+        "expected_observations": [
+          "Full fill of 1000 shares",
+          "Executed on primary listing exchange (NYSE)",
+          "Trade during optimal liquidity window (10:30 AM)",
+          "Large cap stock with deep liquidity"
+        ],
+        "severity": "none",
+        "category": "none"
+      },
+      "metadata": {
+        "annotator": "expert",
+        "confidence": "high",
+        "notes": "Optimal execution - primary exchange, good timing, full fill",
+        "annotation_date": "2024-01-15"
+      }
+    },
+    {
+      "id": "GT002",
+      "fix_message": "8=FIX.4.4|35=8|37=ORD002|55=MSFT|54=2|32=500|31=402.25|30=NASDAQ|60=20240115-11:15:00.000|39=2",
+      "execution": {
+        "order_id": "ORD002",
+        "symbol": "MSFT",
+        "side": "SELL",
+        "quantity": 500.0,
+        "price": 402.25,
+        "venue": "NASDAQ",
+        "timestamp": "2024-01-15T11:15:00",
+        "fill_type": "FULL"
+      },
+      "expert_analysis": {
+        "quality_score": 10,
+        "key_issues": [],
+        "expected_observations": [
+          "Full fill on primary listing exchange",
+          "Mid-morning execution during peak liquidity",
+          "Large cap tech stock with excellent depth",
+          "Clean execution with no partial fills"
+        ],
+        "severity": "none",
+        "category": "none"
+      },
+      "metadata": {
+        "annotator": "expert",
+        "confidence": "high",
+        "notes": "Perfect execution - no improvements possible",
+        "annotation_date": "2024-01-15"
+      }
+    },
+    {
+      "id": "GT003",
+      "fix_message": "8=FIX.4.4|35=8|37=ORD003|55=GOOGL|54=1|32=200|31=141.80|30=NASDAQ|60=20240115-10:05:00.000|39=2",
+      "execution": {
+        "order_id": "ORD003",
+        "symbol": "GOOGL",
+        "side": "BUY",
+        "quantity": 200.0,
+        "price": 141.8,
+        "venue": "NASDAQ",
+        "timestamp": "2024-01-15T10:05:00",
+        "fill_type": "FULL"
+      },
+      "expert_analysis": {
+        "quality_score": 8,
+        "key_issues": [
+          "Execution 5 minutes after market open - slightly elevated volatility"
+        ],
+        "expected_observations": [
+          "Full fill achieved",
+          "Primary listing exchange used",
+          "Early morning execution near market open"
+        ],
+        "severity": "low",
+        "category": "timing"
+      },
+      "metadata": {
+        "annotator": "expert",
+        "confidence": "high",
+        "notes": "Good execution but slight timing concern - open volatility",
+        "annotation_date": "2024-01-15"
+      }
+    },
+    {
+      "id": "GT004",
+      "fix_message": "8=FIX.4.4|35=8|37=ORD004|55=AMZN|54=1|32=300|31=178.90|30=NASDAQ|60=20240115-14:00:00.000|39=2",
+      "execution": {
+        "order_id": "ORD004",
+        "symbol": "AMZN",
+        "side": "BUY",
+        "quantity": 300.0,
+        "price": 178.9,
+        "venue": "NASDAQ",
+        "timestamp": "2024-01-15T14:00:00",
+        "fill_type": "FULL"
+      },
+      "expert_analysis": {
+        "quality_score": 9,
+        "key_issues": [],
+        "expected_observations": [
+          "Full fill of 300 shares",
+          "Afternoon execution with stable liquidity",
+          "Primary exchange execution",
+          "Large cap with consistent depth"
+        ],
+        "severity": "none",
+        "category": "none"
+      },
+      "metadata": {
+        "annotator": "expert",
+        "confidence": "high",
+        "notes": "Excellent mid-afternoon execution",
+        "annotation_date": "2024-01-15"
+      }
+    },
+    {
+      "id": "GT005",
+      "fix_message": "8=FIX.4.4|35=8|37=ORD005|55=NVDA|54=2|32=150|31=545.00|30=NASDAQ|60=20240115-11:45:00.000|39=2",
+      "execution": {
+        "order_id": "ORD005",
+        "symbol": "NVDA",
+        "side": "SELL",
+        "quantity": 150.0,
+        "price": 545.0,
+        "venue": "NASDAQ",
+        "timestamp": "2024-01-15T11:45:00",
+        "fill_type": "FULL"
+      },
+      "expert_analysis": {
+        "quality_score": 9,
+        "key_issues": [],
+        "expected_observations": [
+          "Clean full fill",
+          "High liquidity semiconductor stock",
+          "Late morning execution",
+          "Primary exchange"
+        ],
+        "severity": "none",
+        "category": "none"
+      },
+      "metadata": {
+        "annotator": "expert",
+        "confidence": "high",
+        "notes": "Excellent execution on high-volume stock",
+        "annotation_date": "2024-01-15"
+      }
+    },
+    {
+      "id": "GT006",
+      "fix_message": "8=FIX.4.4|35=8|37=ORD006|55=JPM|54=1|32=800|31=172.15|30=NYSE|60=20240115-10:45:00.000|39=2",
+      "execution": {
+        "order_id": "ORD006",
+        "symbol": "JPM",
+        "side": "BUY",
+        "quantity": 800.0,
+        "price": 172.15,
+        "venue": "NYSE",
+        "timestamp": "2024-01-15T10:45:00",
+        "fill_type": "FULL"
+      },
+      "expert_analysis": {
+        "quality_score": 9,
+        "key_issues": [],
+        "expected_observations": [
+          "Full fill of 800 shares",
+          "NYSE primary listing",
+          "Optimal mid-morning timing",
+          "Financial sector large cap"
+        ],
+        "severity": "none",
+        "category": "none"
+      },
+      "metadata": {
+        "annotator": "expert",
+        "confidence": "high",
+        "notes": "Clean execution on major financial stock",
+        "annotation_date": "2024-01-15"
+      }
+    },
+    {
+      "id": "GT007",
+      "fix_message": "8=FIX.4.4|35=8|37=ORD007|55=V|54=2|32=400|31=275.80|30=NYSE|60=20240115-13:30:00.000|39=2",
+      "execution": {
+        "order_id": "ORD007",
+        "symbol": "V",
+        "side": "SELL",
+        "quantity": 400.0,
+        "price": 275.8,
+        "venue": "NYSE",
+        "timestamp": "2024-01-15T13:30:00",
+        "fill_type": "FULL"
+      },
+      "expert_analysis": {
+        "quality_score": 10,
+        "key_issues": [],
+        "expected_observations": [
+          "Perfect full fill",
+          "Primary exchange execution",
+          "Post-lunch timing with renewed liquidity",
+          "Large cap payments stock"
+        ],
+        "severity": "none",
+        "category": "none"
+      },
+      "metadata": {
+        "annotator": "expert",
+        "confidence": "high",
+        "notes": "Flawless execution",
+        "annotation_date": "2024-01-15"
+      }
+    },
+    {
+      "id": "GT008",
+      "fix_message": "8=FIX.4.4|35=8|37=ORD008|55=META|54=1|32=250|31=385.40|30=NASDAQ|60=20240115-10:20:00.000|39=2",
+      "execution": {
+        "order_id": "ORD008",
+        "symbol": "META",
+        "side": "BUY",
+        "quantity": 250.0,
+        "price": 385.4,
+        "venue": "NASDAQ",
+        "timestamp": "2024-01-15T10:20:00",
+        "fill_type": "FULL"
+      },
+      "expert_analysis": {
+        "quality_score": 9,
+        "key_issues": [],
+        "expected_observations": [
+          "Full fill achieved",
+          "Primary listing exchange",
+          "Post-open execution after initial volatility settled"
+        ],
+        "severity": "none",
+        "category": "none"
+      },
+      "metadata": {
+        "annotator": "expert",
+        "confidence": "high",
+        "notes": "Excellent execution timing",
+        "annotation_date": "2024-01-15"
+      }
+    },
+    {
+      "id": "GT009",
+      "fix_message": "8=FIX.4.4|35=8|37=ORD009|55=BRK.B|54=2|32=100|31=362.50|30=NYSE|60=20240115-14:30:00.000|39=2",
+      "execution": {
+        "order_id": "ORD009",
+        "symbol": "BRK.B",
+        "side": "SELL",
+        "quantity": 100.0,
+        "price": 362.5,
+        "venue": "NYSE",
+        "timestamp": "2024-01-15T14:30:00",
+        "fill_type": "FULL"
+      },
+      "expert_analysis": {
+        "quality_score": 8,
+        "key_issues": [],
+        "expected_observations": [
+          "Clean 100 share fill",
+          "NYSE primary listing",
+          "Afternoon execution",
+          "Lower volatility stock"
+        ],
+        "severity": "none",
+        "category": "none"
+      },
+      "metadata": {
+        "annotator": "expert",
+        "confidence": "high",
+        "notes": "Good execution on stable stock",
+        "annotation_date": "2024-01-15"
+      }
+    },
+    {
+      "id": "GT010",
+      "fix_message": "8=FIX.4.4|35=8|37=ORD010|55=UNH|54=1|32=50|31=528.75|30=NYSE|60=20240115-11:00:00.000|39=2",
+      "execution": {
+        "order_id": "ORD010",
+        "symbol": "UNH",
+        "side": "BUY",
+        "quantity": 50.0,
+        "price": 528.75,
+        "venue": "NYSE",
+        "timestamp": "2024-01-15T11:00:00",
+        "fill_type": "FULL"
+      },
+      "expert_analysis": {
+        "quality_score": 9,
+        "key_issues": [],
+        "expected_observations": [
+          "Full fill of high-priced stock",
+          "Primary exchange",
+          "Peak liquidity timing",
+          "Healthcare large cap"
+        ],
+        "severity": "none",
+        "category": "none"
+      },
+      "metadata": {
+        "annotator": "expert",
+        "confidence": "high",
+        "notes": "Excellent execution on high-value trade",
+        "annotation_date": "2024-01-15"
+      }
+    },
+    {
+      "id": "GT011",
+      "fix_message": "8=FIX.4.4|35=8|37=ORD011|55=SPY|54=1|32=500|31=475.20|30=ARCA|60=20240115-10:15:00.000|39=2",
+      "execution": {
+        "order_id": "ORD011",
+        "symbol": "SPY",
+        "side": "BUY",
+        "quantity": 500.0,
+        "price": 475.2,
+        "venue": "ARCA",
+        "timestamp": "2024-01-15T10:15:00",
+        "fill_type": "FULL"
+      },
+      "expert_analysis": {
+        "quality_score": 10,
+        "key_issues": [],
+        "expected_observations": [
+          "Full fill on most liquid ETF",
+          "ARCA is primary listing for SPY",
+          "Early morning with excellent depth",
+          "Minimal spread expected"
+        ],
+        "severity": "none",
+        "category": "none"
+      },
+      "metadata": {
+        "annotator": "expert",
+        "confidence": "high",
+        "notes": "Perfect ETF execution",
+        "annotation_date": "2024-01-15"
+      }
+    },
+    {
+      "id": "GT012",
+      "fix_message": "8=FIX.4.4|35=8|37=ORD012|55=QQQ|54=2|32=300|31=410.50|30=NASDAQ|60=20240115-11:30:00.000|39=2",
+      "execution": {
+        "order_id": "ORD012",
+        "symbol": "QQQ",
+        "side": "SELL",
+        "quantity": 300.0,
+        "price": 410.5,
+        "venue": "NASDAQ",
+        "timestamp": "2024-01-15T11:30:00",
+        "fill_type": "FULL"
+      },
+      "expert_analysis": {
+        "quality_score": 9,
+        "key_issues": [],
+        "expected_observations": [
+          "Full fill on highly liquid ETF",
+          "Primary listing execution",
+          "Mid-morning optimal timing"
+        ],
+        "severity": "none",
+        "category": "none"
+      },
+      "metadata": {
+        "annotator": "expert",
+        "confidence": "high",
+        "notes": "Excellent tech ETF execution",
+        "annotation_date": "2024-01-15"
+      }
+    },
+    {
+      "id": "GT013",
+      "fix_message": "8=FIX.4.4|35=8|37=ORD013|55=TSLA|54=1|32=200|31=248.90|30=NASDAQ|60=20240115-10:35:00.000|39=2",
+      "execution": {
+        "order_id": "ORD013",
+        "symbol": "TSLA",
+        "side": "BUY",
+        "quantity": 200.0,
+        "price": 248.9,
+        "venue": "NASDAQ",
+        "timestamp": "2024-01-15T10:35:00",
+        "fill_type": "FULL"
+      },
+      "expert_analysis": {
+        "quality_score": 8,
+        "key_issues": [
+          "TSLA can have elevated volatility - timing adequate but not optimal"
+        ],
+        "expected_observations": [
+          "Full fill achieved",
+          "Primary exchange",
+          "High volume meme-adjacent stock",
+          "Morning execution"
+        ],
+        "severity": "low",
+        "category": "timing"
+      },
+      "metadata": {
+        "annotator": "expert",
+        "confidence": "medium",
+        "notes": "Good but TSLA timing is challenging",
+        "annotation_date": "2024-01-15"
+      }
+    },
+    {
+      "id": "GT014",
+      "fix_message": "8=FIX.4.4|35=8|37=ORD014|55=HD|54=2|32=150|31=348.25|30=NYSE|60=20240115-13:45:00.000|39=2",
+      "execution": {
+        "order_id": "ORD014",
+        "symbol": "HD",
+        "side": "SELL",
+        "quantity": 150.0,
+        "price": 348.25,
+        "venue": "NYSE",
+        "timestamp": "2024-01-15T13:45:00",
+        "fill_type": "FULL"
+      },
+      "expert_analysis": {
+        "quality_score": 9,
+        "key_issues": [],
+        "expected_observations": [
+          "Clean full fill",
+          "NYSE primary listing",
+          "Afternoon execution",
+          "Retail sector large cap"
+        ],
+        "severity": "none",
+        "category": "none"
+      },
+      "metadata": {
+        "annotator": "expert",
+        "confidence": "high",
+        "notes": "Solid retail sector execution",
+        "annotation_date": "2024-01-15"
+      }
+    },
+    {
+      "id": "GT015",
+      "fix_message": "8=FIX.4.4|35=8|37=ORD015|55=WMT|54=1|32=600|31=162.40|30=NYSE|60=20240115-10:50:00.000|39=2",
+      "execution": {
+        "order_id": "ORD015",
+        "symbol": "WMT",
+        "side": "BUY",
+        "quantity": 600.0,
+        "price": 162.4,
+        "venue": "NYSE",
+        "timestamp": "2024-01-15T10:50:00",
+        "fill_type": "FULL"
+      },
+      "expert_analysis": {
+        "quality_score": 9,
+        "key_issues": [],
+        "expected_observations": [
+          "Full fill of 600 shares",
+          "NYSE primary listing",
+          "Optimal late morning timing",
+          "Consumer staples with steady flow"
+        ],
+        "severity": "none",
+        "category": "none"
+      },
+      "metadata": {
+        "annotator": "expert",
+        "confidence": "high",
+        "notes": "Excellent defensive stock execution",
+        "annotation_date": "2024-01-15"
+      }
+    },
+    {
+      "id": "GT016",
+      "fix_message": "8=FIX.4.4|35=8|37=ORD016|55=AAPL|54=1|32=500|31=186.20|30=BATS|60=20240115-10:30:00.000|39=2",
+      "execution": {
+        "order_id": "ORD016",
+        "symbol": "AAPL",
+        "side": "BUY",
+        "quantity": 500.0,
+        "price": 186.2,
+        "venue": "BATS",
+        "timestamp": "2024-01-15T10:30:00",
+        "fill_type": "FULL"
+      },
+      "expert_analysis": {
+        "quality_score": 7,
+        "key_issues": [
+          "Executed on BATS instead of primary NYSE - may miss better liquidity"
+        ],
+        "expected_observations": [
+          "Full fill achieved",
+          "Alternative venue used",
+          "Good timing during market hours"
+        ],
+        "severity": "low",
+        "category": "venue_selection"
+      },
+      "metadata": {
+        "annotator": "expert",
+        "confidence": "high",
+        "notes": "Good but venue choice could be optimized",
+        "annotation_date": "2024-01-15"
+      }
+    },
+    {
+      "id": "GT017",
+      "fix_message": "8=FIX.4.4|35=8|37=ORD017|55=MSFT|54=2|32=300|31=401.50|30=IEX|60=20240115-11:00:00.000|39=2",
+      "execution": {
+        "order_id": "ORD017",
+        "symbol": "MSFT",
+        "side": "SELL",
+        "quantity": 300.0,
+        "price": 401.5,
+        "venue": "IEX",
+        "timestamp": "2024-01-15T11:00:00",
+        "fill_type": "FULL"
+      },
+      "expert_analysis": {
+        "quality_score": 7,
+        "key_issues": [
+          "IEX has lower liquidity than NASDAQ for MSFT",
+          "May have received slightly worse price"
+        ],
+        "expected_observations": [
+          "Full fill on alternative venue",
+          "IEX provides speed bump protection",
+          "Good timing"
+        ],
+        "severity": "low",
+        "category": "venue_selection"
+      },
+      "metadata": {
+        "annotator": "expert",
+        "confidence": "medium",
+        "notes": "IEX choice may be intentional for HFT protection",
+        "annotation_date": "2024-01-15"
+      }
+    },
+    {
+      "id": "GT018",
+      "fix_message": "8=FIX.4.4|35=8|37=ORD018|55=GOOGL|54=1|32=150|31=142.50|30=NASDAQ|60=20240115-09:35:00.000|39=2",
+      "execution": {
+        "order_id": "ORD018",
+        "symbol": "GOOGL",
+        "side": "BUY",
+        "quantity": 150.0,
+        "price": 142.5,
+        "venue": "NASDAQ",
+        "timestamp": "2024-01-15T09:35:00",
+        "fill_type": "FULL"
+      },
+      "expert_analysis": {
+        "quality_score": 6,
+        "key_issues": [
+          "Execution within first 5 minutes of market open",
+          "Elevated volatility and wider spreads typical"
+        ],
+        "expected_observations": [
+          "Full fill achieved",
+          "Primary exchange used",
+          "Very early market execution"
+        ],
+        "severity": "medium",
+        "category": "timing"
+      },
+      "metadata": {
+        "annotator": "expert",
+        "confidence": "high",
+        "notes": "Too close to market open - avoid first 10 minutes",
+        "annotation_date": "2024-01-15"
+      }
+    },
+    {
+      "id": "GT019",
+      "fix_message": "8=FIX.4.4|35=8|37=ORD019|55=AMZN|54=2|32=200|31=177.80|30=NASDAQ|60=20240115-15:55:00.000|39=2",
+      "execution": {
+        "order_id": "ORD019",
+        "symbol": "AMZN",
+        "side": "SELL",
+        "quantity": 200.0,
+        "price": 177.8,
+        "venue": "NASDAQ",
+        "timestamp": "2024-01-15T15:55:00",
+        "fill_type": "FULL"
+      },
+      "expert_analysis": {
+        "quality_score": 6,
+        "key_issues": [
+          "Execution 5 minutes before market close",
+          "Closing auction volatility risk",
+          "Reduced liquidity near close"
+        ],
+        "expected_observations": [
+          "Full fill achieved despite timing",
+          "Primary exchange",
+          "Late day execution"
+        ],
+        "severity": "medium",
+        "category": "timing"
+      },
+      "metadata": {
+        "annotator": "expert",
+        "confidence": "high",
+        "notes": "Avoid last 10 minutes unless participating in close",
+        "annotation_date": "2024-01-15"
+      }
+    },
+    {
+      "id": "GT020",
+      "fix_message": "8=FIX.4.4|35=8|37=ORD020|55=NVDA|54=1|32=100|31=548.00|30=NASDAQ|60=20240115-12:30:00.000|39=1",
+      "execution": {
+        "order_id": "ORD020",
+        "symbol": "NVDA",
+        "side": "BUY",
+        "quantity": 100.0,
+        "price": 548.0,
+        "venue": "NASDAQ",
+        "timestamp": "2024-01-15T12:30:00",
+        "fill_type": "PARTIAL"
+      },
+      "expert_analysis": {
+        "quality_score": 6,
+        "key_issues": [
+          "Only partial fill during lunch hours",
+          "Lower midday liquidity"
+        ],
+        "expected_observations": [
+          "Partial fill of 100 shares",
+          "Lunch hour execution",
+          "Reduced volume period"
+        ],
+        "severity": "medium",
+        "category": "fill_quality"
+      },
+      "metadata": {
+        "annotator": "expert",
+        "confidence": "high",
+        "notes": "Lunch hour liquidity dip affected fill",
+        "annotation_date": "2024-01-15"
+      }
+    },
+    {
+      "id": "GT021",
+      "fix_message": "8=FIX.4.4|35=8|37=ORD021|55=JPM|54=2|32=400|31=171.50|30=NYSE|60=20240115-12:15:00.000|39=1",
+      "execution": {
+        "order_id": "ORD021",
+        "symbol": "JPM",
+        "side": "SELL",
+        "quantity": 400.0,
+        "price": 171.5,
+        "venue": "NYSE",
+        "timestamp": "2024-01-15T12:15:00",
+        "fill_type": "PARTIAL"
+      },
+      "expert_analysis": {
+        "quality_score": 5,
+        "key_issues": [
+          "Partial fill only",
+          "Midday liquidity gap",
+          "May need to work remaining order"
+        ],
+        "expected_observations": [
+          "Partial fill of 400 shares",
+          "NYSE primary listing",
+          "Lunch hour timing"
+        ],
+        "severity": "medium",
+        "category": "fill_quality"
+      },
+      "metadata": {
+        "annotator": "expert",
+        "confidence": "high",
+        "notes": "Consider avoiding 12-1 PM for full fills",
+        "annotation_date": "2024-01-15"
+      }
+    },
+    {
+      "id": "GT022",
+      "fix_message": "8=FIX.4.4|35=8|37=ORD022|55=XOM|54=1|32=300|31=102.80|30=NYSE|60=20240115-10:45:00.000|39=2",
+      "execution": {
+        "order_id": "ORD022",
+        "symbol": "XOM",
+        "side": "BUY",
+        "quantity": 300.0,
+        "price": 102.8,
+        "venue": "NYSE",
+        "timestamp": "2024-01-15T10:45:00",
+        "fill_type": "FULL"
+      },
+      "expert_analysis": {
+        "quality_score": 7,
+        "key_issues": [
+          "Price slightly above VWAP for the period"
+        ],
+        "expected_observations": [
+          "Full fill of 300 shares",
+          "NYSE primary listing",
+          "Energy sector large cap"
+        ],
+        "severity": "low",
+        "category": "price_slippage"
+      },
+      "metadata": {
+        "annotator": "expert",
+        "confidence": "medium",
+        "notes": "Acceptable but check against VWAP",
+        "annotation_date": "2024-01-15"
+      }
+    },
+    {
+      "id": "GT023",
+      "fix_message": "8=FIX.4.4|35=8|37=ORD023|55=CVX|54=2|32=250|31=148.90|30=NYSE|60=20240115-11:20:00.000|39=2",
+      "execution": {
+        "order_id": "ORD023",
+        "symbol": "CVX",
+        "side": "SELL",
+        "quantity": 250.0,
+        "price": 148.9,
+        "venue": "NYSE",
+        "timestamp": "2024-01-15T11:20:00",
+        "fill_type": "FULL"
+      },
+      "expert_analysis": {
+        "quality_score": 7,
+        "key_issues": [
+          "Execution price slightly below optimal - minor slippage"
+        ],
+        "expected_observations": [
+          "Full fill achieved",
+          "Primary exchange",
+          "Energy sector execution"
+        ],
+        "severity": "low",
+        "category": "price_slippage"
+      },
+      "metadata": {
+        "annotator": "expert",
+        "confidence": "medium",
+        "notes": "Minor price improvement possible",
+        "annotation_date": "2024-01-15"
+      }
+    },
+    {
+      "id": "GT024",
+      "fix_message": "8=FIX.4.4|35=8|37=ORD024|55=PFE|54=1|32=1000|31=28.50|30=NYSE|60=20240115-14:15:00.000|39=2",
+      "execution": {
+        "order_id": "ORD024",
+        "symbol": "PFE",
+        "side": "BUY",
+        "quantity": 1000.0,
+        "price": 28.5,
+        "venue": "NYSE",
+        "timestamp": "2024-01-15T14:15:00",
+        "fill_type": "FULL"
+      },
+      "expert_analysis": {
+        "quality_score": 7,
+        "key_issues": [
+          "Large order may have moved price slightly"
+        ],
+        "expected_observations": [
+          "Full fill of 1000 shares",
+          "NYSE primary",
+          "Healthcare large cap"
+        ],
+        "severity": "low",
+        "category": "price_slippage"
+      },
+      "metadata": {
+        "annotator": "expert",
+        "confidence": "medium",
+        "notes": "Consider TWAP for large orders",
+        "annotation_date": "2024-01-15"
+      }
+    },
+    {
+      "id": "GT025",
+      "fix_message": "8=FIX.4.4|35=8|37=ORD025|55=DIS|54=2|32=200|31=95.30|30=NYSE|60=20240115-10:25:00.000|39=2",
+      "execution": {
+        "order_id": "ORD025",
+        "symbol": "DIS",
+        "side": "SELL",
+        "quantity": 200.0,
+        "price": 95.3,
+        "venue": "NYSE",
+        "timestamp": "2024-01-15T10:25:00",
+        "fill_type": "FULL"
+      },
+      "expert_analysis": {
+        "quality_score": 6,
+        "key_issues": [
+          "Execution during elevated early morning volatility",
+          "DIS has been particularly volatile recently"
+        ],
+        "expected_observations": [
+          "Full fill achieved",
+          "Primary exchange",
+          "Entertainment sector"
+        ],
+        "severity": "medium",
+        "category": "timing"
+      },
+      "metadata": {
+        "annotator": "expert",
+        "confidence": "high",
+        "notes": "Stock-specific volatility concern",
+        "annotation_date": "2024-01-15"
+      }
+    },
+    {
+      "id": "GT026",
+      "fix_message": "8=FIX.4.4|35=8|37=ORD026|55=INTC|54=1|32=500|31=48.20|30=NASDAQ|60=20240115-13:00:00.000|39=2",
+      "execution": {
+        "order_id": "ORD026",
+        "symbol": "INTC",
+        "side": "BUY",
+        "quantity": 500.0,
+        "price": 48.2,
+        "venue": "NASDAQ",
+        "timestamp": "2024-01-15T13:00:00",
+        "fill_type": "FULL"
+      },
+      "expert_analysis": {
+        "quality_score": 7,
+        "key_issues": [
+          "Post-lunch execution - adequate but not optimal timing"
+        ],
+        "expected_observations": [
+          "Full fill of 500 shares",
+          "Primary exchange",
+          "Semiconductor sector"
+        ],
+        "severity": "low",
+        "category": "timing"
+      },
+      "metadata": {
+        "annotator": "expert",
+        "confidence": "high",
+        "notes": "Acceptable timing choice",
+        "annotation_date": "2024-01-15"
+      }
+    },
+    {
+      "id": "GT027",
+      "fix_message": "8=FIX.4.4|35=8|37=ORD027|55=AMD|54=2|32=350|31=155.70|30=NASDAQ|60=20240115-11:05:00.000|39=2",
+      "execution": {
+        "order_id": "ORD027",
+        "symbol": "AMD",
+        "side": "SELL",
+        "quantity": 350.0,
+        "price": 155.7,
+        "venue": "NASDAQ",
+        "timestamp": "2024-01-15T11:05:00",
+        "fill_type": "FULL"
+      },
+      "expert_analysis": {
+        "quality_score": 7,
+        "key_issues": [
+          "AMD can be volatile - execution was clean but price could vary"
+        ],
+        "expected_observations": [
+          "Full fill achieved",
+          "Primary exchange",
+          "High-beta semiconductor"
+        ],
+        "severity": "low",
+        "category": "price_slippage"
+      },
+      "metadata": {
+        "annotator": "expert",
+        "confidence": "medium",
+        "notes": "Good execution on volatile stock",
+        "annotation_date": "2024-01-15"
+      }
+    },
+    {
+      "id": "GT028",
+      "fix_message": "8=FIX.4.4|35=8|37=ORD028|55=CRM|54=1|32=180|31=282.40|30=NYSE|60=20240115-10:40:00.000|39=2",
+      "execution": {
+        "order_id": "ORD028",
+        "symbol": "CRM",
+        "side": "BUY",
+        "quantity": 180.0,
+        "price": 282.4,
+        "venue": "NYSE",
+        "timestamp": "2024-01-15T10:40:00",
+        "fill_type": "FULL"
+      },
+      "expert_analysis": {
+        "quality_score": 6,
+        "key_issues": [
+          "Consider NASDAQ primary for tech stocks",
+          "NYSE execution adds latency"
+        ],
+        "expected_observations": [
+          "Full fill achieved",
+          "Tech stock on NYSE",
+          "Late morning execution"
+        ],
+        "severity": "medium",
+        "category": "venue_selection"
+      },
+      "metadata": {
+        "annotator": "expert",
+        "confidence": "medium",
+        "notes": "CRM listed on NYSE but tech-heavy order flow on NASDAQ",
+        "annotation_date": "2024-01-15"
+      }
+    },
+    {
+      "id": "GT029",
+      "fix_message": "8=FIX.4.4|35=8|37=ORD029|55=NFLX|54=2|32=80|31=485.60|30=NASDAQ|60=20240115-14:45:00.000|39=2",
+      "execution": {
+        "order_id": "ORD029",
+        "symbol": "NFLX",
+        "side": "SELL",
+        "quantity": 80.0,
+        "price": 485.6,
+        "venue": "NASDAQ",
+        "timestamp": "2024-01-15T14:45:00",
+        "fill_type": "FULL"
+      },
+      "expert_analysis": {
+        "quality_score": 6,
+        "key_issues": [
+          "Late afternoon - approaching close volatility",
+          "NFLX typically more volatile"
+        ],
+        "expected_observations": [
+          "Full fill of 80 shares",
+          "Primary exchange",
+          "Streaming sector"
+        ],
+        "severity": "medium",
+        "category": "timing"
+      },
+      "metadata": {
+        "annotator": "expert",
+        "confidence": "high",
+        "notes": "Consider earlier execution for volatile names",
+        "annotation_date": "2024-01-15"
+      }
+    },
+    {
+      "id": "GT030",
+      "fix_message": "8=FIX.4.4|35=8|37=ORD030|55=COST|54=1|32=75|31=678.25|30=NASDAQ|60=20240115-11:35:00.000|39=2",
+      "execution": {
+        "order_id": "ORD030",
+        "symbol": "COST",
+        "side": "BUY",
+        "quantity": 75.0,
+        "price": 678.25,
+        "venue": "NASDAQ",
+        "timestamp": "2024-01-15T11:35:00",
+        "fill_type": "FULL"
+      },
+      "expert_analysis": {
+        "quality_score": 5,
+        "key_issues": [
+          "High-priced stock - slippage impact larger",
+          "Small lot size on expensive stock"
+        ],
+        "expected_observations": [
+          "Full fill on high-priced consumer stock",
+          "Primary exchange",
+          "Late morning execution"
+        ],
+        "severity": "medium",
+        "category": "price_slippage"
+      },
+      "metadata": {
+        "annotator": "expert",
+        "confidence": "medium",
+        "notes": "Monitor slippage closely on high-priced stocks",
+        "annotation_date": "2024-01-15"
+      }
+    },
+    {
+      "id": "GT031",
+      "fix_message": "8=FIX.4.4|35=8|37=ORD031|55=ABBV|54=2|32=400|31=168.90|30=NYSE|60=20240115-12:45:00.000|39=1",
+      "execution": {
+        "order_id": "ORD031",
+        "symbol": "ABBV",
+        "side": "SELL",
+        "quantity": 400.0,
+        "price": 168.9,
+        "venue": "NYSE",
+        "timestamp": "2024-01-15T12:45:00",
+        "fill_type": "PARTIAL"
+      },
+      "expert_analysis": {
+        "quality_score": 5,
+        "key_issues": [
+          "Partial fill during lunch lull",
+          "Healthcare stocks can have episodic liquidity"
+        ],
+        "expected_observations": [
+          "Partial fill of 400 shares",
+          "Post-lunch execution attempt",
+          "Primary exchange"
+        ],
+        "severity": "medium",
+        "category": "fill_quality"
+      },
+      "metadata": {
+        "annotator": "expert",
+        "confidence": "high",
+        "notes": "Time order execution around liquidity windows",
+        "annotation_date": "2024-01-15"
+      }
+    },
+    {
+      "id": "GT032",
+      "fix_message": "8=FIX.4.4|35=8|37=ORD032|55=LLY|54=1|32=30|31=595.80|30=NYSE|60=20240115-10:55:00.000|39=2",
+      "execution": {
+        "order_id": "ORD032",
+        "symbol": "LLY",
+        "side": "BUY",
+        "quantity": 30.0,
+        "price": 595.8,
+        "venue": "NYSE",
+        "timestamp": "2024-01-15T10:55:00",
+        "fill_type": "FULL"
+      },
+      "expert_analysis": {
+        "quality_score": 6,
+        "key_issues": [
+          "Very high stock price - dollar impact of spread significant",
+          "Small lot vulnerable to odd-lot pricing"
+        ],
+        "expected_observations": [
+          "Full fill of 30 shares",
+          "High-value pharma stock",
+          "Late morning execution"
+        ],
+        "severity": "medium",
+        "category": "price_slippage"
+      },
+      "metadata": {
+        "annotator": "expert",
+        "confidence": "medium",
+        "notes": "Odd lots on high-priced stocks get worse fills",
+        "annotation_date": "2024-01-15"
+      }
+    },
+    {
+      "id": "GT033",
+      "fix_message": "8=FIX.4.4|35=8|37=ORD033|55=TMO|54=2|32=60|31=528.40|30=NYSE|60=20240115-15:30:00.000|39=2",
+      "execution": {
+        "order_id": "ORD033",
+        "symbol": "TMO",
+        "side": "SELL",
+        "quantity": 60.0,
+        "price": 528.4,
+        "venue": "NYSE",
+        "timestamp": "2024-01-15T15:30:00",
+        "fill_type": "FULL"
+      },
+      "expert_analysis": {
+        "quality_score": 5,
+        "key_issues": [
+          "30 minutes before close - elevated volatility",
+          "High-priced stock near close"
+        ],
+        "expected_observations": [
+          "Full fill of 60 shares",
+          "Late afternoon execution",
+          "Healthcare equipment sector"
+        ],
+        "severity": "medium",
+        "category": "timing"
+      },
+      "metadata": {
+        "annotator": "expert",
+        "confidence": "high",
+        "notes": "Avoid last 30 minutes for non-MOC orders",
+        "annotation_date": "2024-01-15"
+      }
+    },
+    {
+      "id": "GT034",
+      "fix_message": "8=FIX.4.4|35=8|37=ORD034|55=MRK|54=1|32=500|31=118.70|30=NYSE|60=20240115-11:25:00.000|39=2",
+      "execution": {
+        "order_id": "ORD034",
+        "symbol": "MRK",
+        "side": "BUY",
+        "quantity": 500.0,
+        "price": 118.7,
+        "venue": "NYSE",
+        "timestamp": "2024-01-15T11:25:00",
+        "fill_type": "FULL"
+      },
+      "expert_analysis": {
+        "quality_score": 7,
+        "key_issues": [
+          "Price slightly above quoted mid"
+        ],
+        "expected_observations": [
+          "Full fill of 500 shares",
+          "NYSE primary",
+          "Pharma large cap"
+        ],
+        "severity": "low",
+        "category": "price_slippage"
+      },
+      "metadata": {
+        "annotator": "expert",
+        "confidence": "medium",
+        "notes": "Minor improvement possible with limit order",
+        "annotation_date": "2024-01-15"
+      }
+    },
+    {
+      "id": "GT035",
+      "fix_message": "8=FIX.4.4|35=8|37=ORD035|55=PG|54=2|32=350|31=152.30|30=NYSE|60=20240115-13:20:00.000|39=2",
+      "execution": {
+        "order_id": "ORD035",
+        "symbol": "PG",
+        "side": "SELL",
+        "quantity": 350.0,
+        "price": 152.3,
+        "venue": "NYSE",
+        "timestamp": "2024-01-15T13:20:00",
+        "fill_type": "FULL"
+      },
+      "expert_analysis": {
+        "quality_score": 6,
+        "key_issues": [
+          "Early afternoon - post-lunch liquidity still ramping",
+          "Consumer staples typically stable but volume lighter"
+        ],
+        "expected_observations": [
+          "Full fill of 350 shares",
+          "Primary exchange",
+          "Defensive stock execution"
+        ],
+        "severity": "medium",
+        "category": "timing"
+      },
+      "metadata": {
+        "annotator": "expert",
+        "confidence": "high",
+        "notes": "Wait until 2 PM for optimal afternoon liquidity",
+        "annotation_date": "2024-01-15"
+      }
+    },
+    {
+      "id": "GT036",
+      "fix_message": "8=FIX.4.4|35=8|37=ORD036|55=SMCI|54=1|32=50|31=485.20|30=NASDAQ|60=20240115-09:32:00.000|39=2",
+      "execution": {
+        "order_id": "ORD036",
+        "symbol": "SMCI",
+        "side": "BUY",
+        "quantity": 50.0,
+        "price": 485.2,
+        "venue": "NASDAQ",
+        "timestamp": "2024-01-15T09:32:00",
+        "fill_type": "FULL"
+      },
+      "expert_analysis": {
+        "quality_score": 3,
+        "key_issues": [
+          "Highly volatile mid-cap stock",
+          "Execution 2 minutes after open - maximum volatility",
+          "Wide spreads at open",
+          "Significant slippage risk"
+        ],
+        "expected_observations": [
+          "Full fill achieved",
+          "Very early execution on volatile stock",
+          "Mid-cap with high retail interest"
+        ],
+        "severity": "high",
+        "category": "timing"
+      },
+      "metadata": {
+        "annotator": "expert",
+        "confidence": "high",
+        "notes": "Never trade volatile mid-caps in first 10 minutes",
+        "annotation_date": "2024-01-15"
+      }
+    },
+    {
+      "id": "GT037",
+      "fix_message": "8=FIX.4.4|35=8|37=ORD037|55=PLTR|54=2|32=1000|31=18.45|30=NYSE|60=20240115-09:31:00.000|39=2",
+      "execution": {
+        "order_id": "ORD037",
+        "symbol": "PLTR",
+        "side": "SELL",
+        "quantity": 1000.0,
+        "price": 18.45,
+        "venue": "NYSE",
+        "timestamp": "2024-01-15T09:31:00",
+        "fill_type": "FULL"
+      },
+      "expert_analysis": {
+        "quality_score": 2,
+        "key_issues": [
+          "Meme-adjacent stock with extreme open volatility",
+          "1 minute after open - worst possible timing",
+          "Large order size for volatile stock",
+          "Likely significant adverse selection"
+        ],
+        "expected_observations": [
+          "Full fill of 1000 shares",
+          "Immediate post-open execution",
+          "High retail interest stock"
+        ],
+        "severity": "critical",
+        "category": "timing"
+      },
+      "metadata": {
+        "annotator": "expert",
+        "confidence": "high",
+        "notes": "Critical timing error - avoid retail-heavy stocks at open",
+        "annotation_date": "2024-01-15"
+      }
+    },
+    {
+      "id": "GT038",
+      "fix_message": "8=FIX.4.4|35=8|37=ORD038|55=RIVN|54=1|32=500|31=16.80|30=NASDAQ|60=20240115-15:58:00.000|39=2",
+      "execution": {
+        "order_id": "ORD038",
+        "symbol": "RIVN",
+        "side": "BUY",
+        "quantity": 500.0,
+        "price": 16.8,
+        "venue": "NASDAQ",
+        "timestamp": "2024-01-15T15:58:00",
+        "fill_type": "FULL"
+      },
+      "expert_analysis": {
+        "quality_score": 2,
+        "key_issues": [
+          "2 minutes before close",
+          "Volatile EV stock",
+          "Closing auction imbalance risk",
+          "Extremely poor timing"
+        ],
+        "expected_observations": [
+          "Full fill achieved",
+          "Near-close volatile execution",
+          "EV sector with high volatility"
+        ],
+        "severity": "critical",
+        "category": "timing"
+      },
+      "metadata": {
+        "annotator": "expert",
+        "confidence": "high",
+        "notes": "Never trade volatile names in last 5 minutes",
+        "annotation_date": "2024-01-15"
+      }
+    },
+    {
+      "id": "GT039",
+      "fix_message": "8=FIX.4.4|35=8|37=ORD039|55=COIN|54=2|32=200|31=142.30|30=NASDAQ|60=20240115-16:30:00.000|39=2",
+      "execution": {
+        "order_id": "ORD039",
+        "symbol": "COIN",
+        "side": "SELL",
+        "quantity": 200.0,
+        "price": 142.3,
+        "venue": "NASDAQ",
+        "timestamp": "2024-01-15T16:30:00",
+        "fill_type": "FULL"
+      },
+      "expert_analysis": {
+        "quality_score": 3,
+        "key_issues": [
+          "After-hours execution",
+          "Crypto-correlated stock with extreme volatility",
+          "Reduced liquidity in extended hours",
+          "Wider spreads"
+        ],
+        "expected_observations": [
+          "After-hours fill",
+          "Extended hours execution",
+          "Crypto-adjacent volatility"
+        ],
+        "severity": "high",
+        "category": "timing"
+      },
+      "metadata": {
+        "annotator": "expert",
+        "confidence": "high",
+        "notes": "Avoid after-hours for volatile names",
+        "annotation_date": "2024-01-15"
+      }
+    },
+    {
+      "id": "GT040",
+      "fix_message": "8=FIX.4.4|35=8|37=ORD040|55=MARA|54=1|32=800|31=22.15|30=NASDAQ|60=20240115-10:15:00.000|39=1",
+      "execution": {
+        "order_id": "ORD040",
+        "symbol": "MARA",
+        "side": "BUY",
+        "quantity": 800.0,
+        "price": 22.15,
+        "venue": "NASDAQ",
+        "timestamp": "2024-01-15T10:15:00",
+        "fill_type": "PARTIAL"
+      },
+      "expert_analysis": {
+        "quality_score": 3,
+        "key_issues": [
+          "Crypto mining stock - extreme volatility",
+          "Only partial fill on 800 share order",
+          "Liquidity gaps common",
+          "Wide bid-ask spreads"
+        ],
+        "expected_observations": [
+          "Partial fill only",
+          "High volatility sector",
+          "Crypto-correlated price movement"
+        ],
+        "severity": "high",
+        "category": "fill_quality"
+      },
+      "metadata": {
+        "annotator": "expert",
+        "confidence": "high",
+        "notes": "Use TWAP/VWAP for volatile names",
+        "annotation_date": "2024-01-15"
+      }
+    },
+    {
+      "id": "GT041",
+      "fix_message": "8=FIX.4.4|35=8|37=ORD041|55=GME|54=2|32=300|31=14.85|30=NYSE|60=20240115-10:02:00.000|39=2",
+      "execution": {
+        "order_id": "ORD041",
+        "symbol": "GME",
+        "side": "SELL",
+        "quantity": 300.0,
+        "price": 14.85,
+        "venue": "NYSE",
+        "timestamp": "2024-01-15T10:02:00",
+        "fill_type": "FULL"
+      },
+      "expert_analysis": {
+        "quality_score": 2,
+        "key_issues": [
+          "Meme stock with unpredictable volatility",
+          "2 minutes after open",
+          "Retail-driven price action",
+          "Likely executed into adverse momentum"
+        ],
+        "expected_observations": [
+          "Full fill on meme stock",
+          "Early morning volatile execution",
+          "High short interest name"
+        ],
+        "severity": "critical",
+        "category": "timing"
+      },
+      "metadata": {
+        "annotator": "expert",
+        "confidence": "high",
+        "notes": "Meme stocks require specialized execution",
+        "annotation_date": "2024-01-15"
+      }
+    },
+    {
+      "id": "GT042",
+      "fix_message": "8=FIX.4.4|35=8|37=ORD042|55=AMC|54=1|32=500|31=5.42|30=NYSE|60=20240115-15:59:00.000|39=2",
+      "execution": {
+        "order_id": "ORD042",
+        "symbol": "AMC",
+        "side": "BUY",
+        "quantity": 500.0,
+        "price": 5.42,
+        "venue": "NYSE",
+        "timestamp": "2024-01-15T15:59:00",
+        "fill_type": "FULL"
+      },
+      "expert_analysis": {
+        "quality_score": 1,
+        "key_issues": [
+          "Meme stock at market close",
+          "1 minute before close",
+          "Maximum volatility period for retail names",
+          "Extremely poor judgment"
+        ],
+        "expected_observations": [
+          "Full fill on meme stock",
+          "Closing minute execution",
+          "Maximum adverse conditions"
+        ],
+        "severity": "critical",
+        "category": "timing"
+      },
+      "metadata": {
+        "annotator": "expert",
+        "confidence": "high",
+        "notes": "Worst possible execution scenario",
+        "annotation_date": "2024-01-15"
+      }
+    },
+    {
+      "id": "GT043",
+      "fix_message": "8=FIX.4.4|35=8|37=ORD043|55=LCID|54=2|32=1500|31=4.28|30=NASDAQ|60=20240115-12:30:00.000|39=1",
+      "execution": {
+        "order_id": "ORD043",
+        "symbol": "LCID",
+        "side": "SELL",
+        "quantity": 1500.0,
+        "price": 4.28,
+        "venue": "NASDAQ",
+        "timestamp": "2024-01-15T12:30:00",
+        "fill_type": "PARTIAL"
+      },
+      "expert_analysis": {
+        "quality_score": 3,
+        "key_issues": [
+          "Large order on low-liquidity EV stock",
+          "Partial fill during lunch",
+          "Stock under $5 - wider spreads",
+          "Retail-heavy flow"
+        ],
+        "expected_observations": [
+          "Partial fill of 1500 shares",
+          "Low-price EV stock",
+          "Midday liquidity gap"
+        ],
+        "severity": "high",
+        "category": "fill_quality"
+      },
+      "metadata": {
+        "annotator": "expert",
+        "confidence": "high",
+        "notes": "Break up orders on illiquid names",
+        "annotation_date": "2024-01-15"
+      }
+    },
+    {
+      "id": "GT044",
+      "fix_message": "8=FIX.4.4|35=8|37=ORD044|55=ARKK|54=1|32=200|31=45.80|30=ARCA|60=20240115-17:00:00.000|39=2",
+      "execution": {
+        "order_id": "ORD044",
+        "symbol": "ARKK",
+        "side": "BUY",
+        "quantity": 200.0,
+        "price": 45.8,
+        "venue": "ARCA",
+        "timestamp": "2024-01-15T17:00:00",
+        "fill_type": "FULL"
+      },
+      "expert_analysis": {
+        "quality_score": 4,
+        "key_issues": [
+          "After-hours ETF execution",
+          "ARKK has high beta to growth stocks",
+          "Extended hours premium/discount risk",
+          "Underlying holdings not trading"
+        ],
+        "expected_observations": [
+          "After-hours ETF execution",
+          "Extended hours fill",
+          "Volatility ETF"
+        ],
+        "severity": "medium",
+        "category": "timing"
+      },
+      "metadata": {
+        "annotator": "expert",
+        "confidence": "high",
+        "notes": "ETF pricing unreliable in extended hours",
+        "annotation_date": "2024-01-15"
+      }
+    },
+    {
+      "id": "GT045",
+      "fix_message": "8=FIX.4.4|35=8|37=ORD045|55=SOXL|54=2|32=100|31=28.50|30=ARCA|60=20240115-09:31:00.000|39=2",
+      "execution": {
+        "order_id": "ORD045",
+        "symbol": "SOXL",
+        "side": "SELL",
+        "quantity": 100.0,
+        "price": 28.5,
+        "venue": "ARCA",
+        "timestamp": "2024-01-15T09:31:00",
+        "fill_type": "FULL"
+      },
+      "expert_analysis": {
+        "quality_score": 2,
+        "key_issues": [
+          "3x leveraged ETF at market open",
+          "Extreme volatility",
+          "1 minute after open",
+          "Leveraged products gap significantly"
+        ],
+        "expected_observations": [
+          "Leveraged ETF execution",
+          "Immediate post-open",
+          "Semiconductor sector leverage"
+        ],
+        "severity": "critical",
+        "category": "timing"
+      },
+      "metadata": {
+        "annotator": "expert",
+        "confidence": "high",
+        "notes": "Never trade leveraged ETFs at open",
+        "annotation_date": "2024-01-15"
+      }
+    },
+    {
+      "id": "GT046",
+      "fix_message": "8=FIX.4.4|35=8|37=ORD046|55=SPXU|54=1|32=500|31=18.90|30=ARCA|60=20240115-15:57:00.000|39=2",
+      "execution": {
+        "order_id": "ORD046",
+        "symbol": "SPXU",
+        "side": "BUY",
+        "quantity": 500.0,
+        "price": 18.9,
+        "venue": "ARCA",
+        "timestamp": "2024-01-15T15:57:00",
+        "fill_type": "FULL"
+      },
+      "expert_analysis": {
+        "quality_score": 3,
+        "key_issues": [
+          "3x inverse S&P ETF near close",
+          "Leveraged products have closing volatility",
+          "Rebalancing activity creates adverse flow",
+          "Poor timing for leveraged products"
+        ],
+        "expected_observations": [
+          "Inverse leveraged ETF execution",
+          "Near-close execution",
+          "Rebalancing impact"
+        ],
+        "severity": "high",
+        "category": "timing"
+      },
+      "metadata": {
+        "annotator": "expert",
+        "confidence": "high",
+        "notes": "Leveraged ETFs rebalance at close - avoid",
+        "annotation_date": "2024-01-15"
+      }
+    },
+    {
+      "id": "GT047",
+      "fix_message": "8=FIX.4.4|35=8|37=ORD047|55=TQQQ|54=2|32=300|31=52.40|30=NASDAQ|60=20240115-11:45:00.000|39=2",
+      "execution": {
+        "order_id": "ORD047",
+        "symbol": "TQQQ",
+        "side": "SELL",
+        "quantity": 300.0,
+        "price": 52.4,
+        "venue": "NASDAQ",
+        "timestamp": "2024-01-15T11:45:00",
+        "fill_type": "FULL"
+      },
+      "expert_analysis": {
+        "quality_score": 4,
+        "key_issues": [
+          "3x leveraged Nasdaq ETF",
+          "Late morning timing acceptable for leveraged",
+          "Still elevated volatility vs underlying"
+        ],
+        "expected_observations": [
+          "Leveraged tech ETF execution",
+          "Mid-morning timing",
+          "Full fill achieved"
+        ],
+        "severity": "medium",
+        "category": "price_slippage"
+      },
+      "metadata": {
+        "annotator": "expert",
+        "confidence": "medium",
+        "notes": "Best timing for leveraged ETFs is mid-session",
+        "annotation_date": "2024-01-15"
+      }
+    },
+    {
+      "id": "GT048",
+      "fix_message": "8=FIX.4.4|35=8|37=ORD048|55=SQQQ|54=1|32=400|31=12.65|30=NASDAQ|60=20240115-12:00:00.000|39=1",
+      "execution": {
+        "order_id": "ORD048",
+        "symbol": "SQQQ",
+        "side": "BUY",
+        "quantity": 400.0,
+        "price": 12.65,
+        "venue": "NASDAQ",
+        "timestamp": "2024-01-15T12:00:00",
+        "fill_type": "PARTIAL"
+      },
+      "expert_analysis": {
+        "quality_score": 4,
+        "key_issues": [
+          "Partial fill on inverse leveraged ETF",
+          "Lunch hour liquidity dip",
+          "Leveraged products have wider spreads"
+        ],
+        "expected_observations": [
+          "Partial fill of 400 shares",
+          "Inverse leveraged Nasdaq ETF",
+          "Midday execution"
+        ],
+        "severity": "medium",
+        "category": "fill_quality"
+      },
+      "metadata": {
+        "annotator": "expert",
+        "confidence": "medium",
+        "notes": "Acceptable for leveraged but partial is concerning",
+        "annotation_date": "2024-01-15"
+      }
+    },
+    {
+      "id": "GT049",
+      "fix_message": "8=FIX.4.4|35=8|37=ORD049|55=AAPL|54=1|32=50000|31=185.45|30=DARK|60=20240115-10:30:00.000|39=2",
+      "execution": {
+        "order_id": "ORD049",
+        "symbol": "AAPL",
+        "side": "BUY",
+        "quantity": 50000.0,
+        "price": 185.45,
+        "venue": "DARK",
+        "timestamp": "2024-01-15T10:30:00",
+        "fill_type": "FULL"
+      },
+      "expert_analysis": {
+        "quality_score": 4,
+        "key_issues": [
+          "Large block on dark pool",
+          "Potential information leakage",
+          "Price discovery concerns",
+          "Better to use algorithmic execution"
+        ],
+        "expected_observations": [
+          "50,000 share block trade",
+          "Dark pool execution",
+          "Institutional size order"
+        ],
+        "severity": "medium",
+        "category": "venue_selection"
+      },
+      "metadata": {
+        "annotator": "expert",
+        "confidence": "medium",
+        "notes": "Consider TWAP/VWAP over block execution",
+        "annotation_date": "2024-01-15"
+      }
+    },
+    {
+      "id": "GT050",
+      "fix_message": "8=FIX.4.4|35=8|37=ORD050|55=MSFT|54=2|32=25000|31=401.80|30=SIGMA|60=20240115-14:00:00.000|39=2",
+      "execution": {
+        "order_id": "ORD050",
+        "symbol": "MSFT",
+        "side": "SELL",
+        "quantity": 25000.0,
+        "price": 401.8,
+        "venue": "SIGMA",
+        "timestamp": "2024-01-15T14:00:00",
+        "fill_type": "FULL"
+      },
+      "expert_analysis": {
+        "quality_score": 4,
+        "key_issues": [
+          "Large institutional order on alternative venue",
+          "Sigma-X dark pool",
+          "Potential for adverse selection",
+          "Consider lit market for price discovery"
+        ],
+        "expected_observations": [
+          "25,000 share block trade",
+          "Dark pool execution",
+          "Afternoon block crossing"
+        ],
+        "severity": "medium",
+        "category": "venue_selection"
+      },
+      "metadata": {
+        "annotator": "expert",
+        "confidence": "medium",
+        "notes": "Dark pools appropriate for size but monitor execution quality",
+        "annotation_date": "2024-01-15"
+      }
+    },
+    {
+      "id": "GT051",
+      "fix_message": "8=FIX.4.4|35=8|37=ORD051|55=IWM|54=1|32=1000|31=198.50|30=ARCA|60=20240115-10:45:00.000|39=2",
+      "execution": {
+        "order_id": "ORD051",
+        "symbol": "IWM",
+        "side": "BUY",
+        "quantity": 1000.0,
+        "price": 198.5,
+        "venue": "ARCA",
+        "timestamp": "2024-01-15T10:45:00",
+        "fill_type": "FULL"
+      },
+      "expert_analysis": {
+        "quality_score": 8,
+        "key_issues": [],
+        "expected_observations": [
+          "Full fill on Russell 2000 ETF",
+          "Primary listing exchange",
+          "Good mid-morning timing"
+        ],
+        "severity": "none",
+        "category": "none"
+      },
+      "metadata": {
+        "annotator": "expert",
+        "confidence": "high",
+        "notes": "Solid ETF execution",
+        "annotation_date": "2024-01-15"
+      }
+    },
+    {
+      "id": "GT052",
+      "fix_message": "8=FIX.4.4|35=8|37=ORD052|55=EEM|54=2|32=800|31=39.75|30=ARCA|60=20240115-11:15:00.000|39=2",
+      "execution": {
+        "order_id": "ORD052",
+        "symbol": "EEM",
+        "side": "SELL",
+        "quantity": 800.0,
+        "price": 39.75,
+        "venue": "ARCA",
+        "timestamp": "2024-01-15T11:15:00",
+        "fill_type": "FULL"
+      },
+      "expert_analysis": {
+        "quality_score": 7,
+        "key_issues": [
+          "Emerging markets ETF - some underlying markets closed",
+          "Premium/discount may be elevated"
+        ],
+        "expected_observations": [
+          "Full fill of 800 shares",
+          "EM ETF with diverse underlying",
+          "Mid-morning US session"
+        ],
+        "severity": "low",
+        "category": "timing"
+      },
+      "metadata": {
+        "annotator": "expert",
+        "confidence": "medium",
+        "notes": "EM ETFs best traded when Asian markets overlap",
+        "annotation_date": "2024-01-15"
+      }
+    },
+    {
+      "id": "GT053",
+      "fix_message": "8=FIX.4.4|35=8|37=ORD053|55=GLD|54=1|32=500|31=185.20|30=ARCA|60=20240115-10:30:00.000|39=2",
+      "execution": {
+        "order_id": "ORD053",
+        "symbol": "GLD",
+        "side": "BUY",
+        "quantity": 500.0,
+        "price": 185.2,
+        "venue": "ARCA",
+        "timestamp": "2024-01-15T10:30:00",
+        "fill_type": "FULL"
+      },
+      "expert_analysis": {
+        "quality_score": 8,
+        "key_issues": [],
+        "expected_observations": [
+          "Full fill on gold ETF",
+          "Commodity ETF with good liquidity",
+          "Mid-morning execution"
+        ],
+        "severity": "none",
+        "category": "none"
+      },
+      "metadata": {
+        "annotator": "expert",
+        "confidence": "high",
+        "notes": "Good commodity ETF execution",
+        "annotation_date": "2024-01-15"
+      }
+    },
+    {
+      "id": "GT054",
+      "fix_message": "8=FIX.4.4|35=8|37=ORD054|55=XLE|54=2|32=600|31=82.45|30=ARCA|60=20240115-14:30:00.000|39=2",
+      "execution": {
+        "order_id": "ORD054",
+        "symbol": "XLE",
+        "side": "SELL",
+        "quantity": 600.0,
+        "price": 82.45,
+        "venue": "ARCA",
+        "timestamp": "2024-01-15T14:30:00",
+        "fill_type": "FULL"
+      },
+      "expert_analysis": {
+        "quality_score": 8,
+        "key_issues": [],
+        "expected_observations": [
+          "Full fill on energy sector ETF",
+          "ARCA primary listing",
+          "Afternoon execution"
+        ],
+        "severity": "none",
+        "category": "none"
+      },
+      "metadata": {
+        "annotator": "expert",
+        "confidence": "high",
+        "notes": "Clean sector ETF execution",
+        "annotation_date": "2024-01-15"
+      }
+    },
+    {
+      "id": "GT055",
+      "fix_message": "8=FIX.4.4|35=8|37=ORD055|55=XLF|54=1|32=1500|31=38.20|30=ARCA|60=20240115-11:00:00.000|39=2",
+      "execution": {
+        "order_id": "ORD055",
+        "symbol": "XLF",
+        "side": "BUY",
+        "quantity": 1500.0,
+        "price": 38.2,
+        "venue": "ARCA",
+        "timestamp": "2024-01-15T11:00:00",
+        "fill_type": "FULL"
+      },
+      "expert_analysis": {
+        "quality_score": 9,
+        "key_issues": [],
+        "expected_observations": [
+          "Full fill of 1500 shares",
+          "Financial sector ETF",
+          "Peak liquidity timing"
+        ],
+        "severity": "none",
+        "category": "none"
+      },
+      "metadata": {
+        "annotator": "expert",
+        "confidence": "high",
+        "notes": "Excellent sector ETF execution",
+        "annotation_date": "2024-01-15"
+      }
+    }
+  ]
+}
