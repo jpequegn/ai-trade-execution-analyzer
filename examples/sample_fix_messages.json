@@ -1,0 +1,1115 @@
+{
+  "metadata": {
+    "total_messages": 55,
+    "source_file": "sample_fix_messages.txt",
+    "description": "Sample FIX execution report messages for testing",
+    "categories": {
+      "good_executions": "Messages 1-15 (expected score 8-10)",
+      "average_executions": "Messages 16-35 (expected score 5-7)",
+      "poor_executions": "Messages 36-50 (expected score 1-4)",
+      "edge_cases": "Messages 51-55 (special scenarios)"
+    }
+  },
+  "executions": [
+    {
+      "id": "MSG001",
+      "category": "good",
+      "expected_score_range": "8-10",
+      "raw_message": "8=FIX.4.4|35=8|37=ORD001|55=AAPL|54=1|32=100|31=185.50|30=NASDAQ|60=20240115-09:30:05.123|39=2|150=F|14=100|6=185.50",
+      "parsed": {
+        "order_id": "ORD001",
+        "symbol": "AAPL",
+        "side": "BUY",
+        "quantity": 100.0,
+        "price": 185.5,
+        "venue": "NASDAQ",
+        "timestamp": "2024-01-15T09:30:05.123000",
+        "fill_type": "FULL",
+        "fix_version": "FIX.4.4",
+        "exec_type": "F",
+        "cum_qty": 100.0,
+        "avg_px": 185.5
+      }
+    },
+    {
+      "id": "MSG002",
+      "category": "good",
+      "expected_score_range": "8-10",
+      "raw_message": "8=FIX.4.4|35=8|37=ORD002|55=MSFT|54=2|32=500|31=402.75|30=NASDAQ|60=20240115-10:15:00.000|39=2|150=F|14=500|6=402.75",
+      "parsed": {
+        "order_id": "ORD002",
+        "symbol": "MSFT",
+        "side": "SELL",
+        "quantity": 500.0,
+        "price": 402.75,
+        "venue": "NASDAQ",
+        "timestamp": "2024-01-15T10:15:00",
+        "fill_type": "FULL",
+        "fix_version": "FIX.4.4",
+        "exec_type": "F",
+        "cum_qty": 500.0,
+        "avg_px": 402.75
+      }
+    },
+    {
+      "id": "MSG003",
+      "category": "good",
+      "expected_score_range": "8-10",
+      "raw_message": "8=FIX.4.4|35=8|37=ORD003|55=GOOGL|54=1|32=50|31=142.30|30=NASDAQ|60=20240115-11:00:00.500|39=2|150=F|14=50|6=142.30",
+      "parsed": {
+        "order_id": "ORD003",
+        "symbol": "GOOGL",
+        "side": "BUY",
+        "quantity": 50.0,
+        "price": 142.3,
+        "venue": "NASDAQ",
+        "timestamp": "2024-01-15T11:00:00.500000",
+        "fill_type": "FULL",
+        "fix_version": "FIX.4.4",
+        "exec_type": "F",
+        "cum_qty": 50.0,
+        "avg_px": 142.3
+      }
+    },
+    {
+      "id": "MSG004",
+      "category": "good",
+      "expected_score_range": "8-10",
+      "raw_message": "8=FIX.4.4|35=8|37=ORD004|55=AMZN|54=1|32=200|31=178.90|30=NASDAQ|60=20240115-09:45:30.100|39=2|150=F|14=200|6=178.90",
+      "parsed": {
+        "order_id": "ORD004",
+        "symbol": "AMZN",
+        "side": "BUY",
+        "quantity": 200.0,
+        "price": 178.9,
+        "venue": "NASDAQ",
+        "timestamp": "2024-01-15T09:45:30.100000",
+        "fill_type": "FULL",
+        "fix_version": "FIX.4.4",
+        "exec_type": "F",
+        "cum_qty": 200.0,
+        "avg_px": 178.9
+      }
+    },
+    {
+      "id": "MSG005",
+      "category": "good",
+      "expected_score_range": "8-10",
+      "raw_message": "8=FIX.4.4|35=8|37=ORD005|55=NVDA|54=2|32=75|31=875.25|30=NASDAQ|60=20240115-14:30:00.000|39=2|150=F|14=75|6=875.25",
+      "parsed": {
+        "order_id": "ORD005",
+        "symbol": "NVDA",
+        "side": "SELL",
+        "quantity": 75.0,
+        "price": 875.25,
+        "venue": "NASDAQ",
+        "timestamp": "2024-01-15T14:30:00",
+        "fill_type": "FULL",
+        "fix_version": "FIX.4.4",
+        "exec_type": "F",
+        "cum_qty": 75.0,
+        "avg_px": 875.25
+      }
+    },
+    {
+      "id": "MSG006",
+      "category": "good",
+      "expected_score_range": "8-10",
+      "raw_message": "8=FIX.4.4|35=8|37=ORD006|55=JPM|54=1|32=300|31=195.40|30=NYSE|60=20240115-10:00:00.000|39=2|150=F|14=300|6=195.40",
+      "parsed": {
+        "order_id": "ORD006",
+        "symbol": "JPM",
+        "side": "BUY",
+        "quantity": 300.0,
+        "price": 195.4,
+        "venue": "NYSE",
+        "timestamp": "2024-01-15T10:00:00",
+        "fill_type": "FULL",
+        "fix_version": "FIX.4.4",
+        "exec_type": "F",
+        "cum_qty": 300.0,
+        "avg_px": 195.4
+      }
+    },
+    {
+      "id": "MSG007",
+      "category": "good",
+      "expected_score_range": "8-10",
+      "raw_message": "8=FIX.4.4|35=8|37=ORD007|55=V|54=1|32=150|31=275.80|30=NYSE|60=20240115-11:30:15.250|39=2|150=F|14=150|6=275.80",
+      "parsed": {
+        "order_id": "ORD007",
+        "symbol": "V",
+        "side": "BUY",
+        "quantity": 150.0,
+        "price": 275.8,
+        "venue": "NYSE",
+        "timestamp": "2024-01-15T11:30:15.250000",
+        "fill_type": "FULL",
+        "fix_version": "FIX.4.4",
+        "exec_type": "F",
+        "cum_qty": 150.0,
+        "avg_px": 275.8
+      }
+    },
+    {
+      "id": "MSG008",
+      "category": "good",
+      "expected_score_range": "8-10",
+      "raw_message": "8=FIX.4.4|35=8|37=ORD008|55=JNJ|54=2|32=400|31=156.20|30=NYSE|60=20240115-13:00:00.000|39=2|150=F|14=400|6=156.20",
+      "parsed": {
+        "order_id": "ORD008",
+        "symbol": "JNJ",
+        "side": "SELL",
+        "quantity": 400.0,
+        "price": 156.2,
+        "venue": "NYSE",
+        "timestamp": "2024-01-15T13:00:00",
+        "fill_type": "FULL",
+        "fix_version": "FIX.4.4",
+        "exec_type": "F",
+        "cum_qty": 400.0,
+        "avg_px": 156.2
+      }
+    },
+    {
+      "id": "MSG009",
+      "category": "good",
+      "expected_score_range": "8-10",
+      "raw_message": "8=FIX.4.4|35=8|37=ORD009|55=META|54=1|32=250|31=485.60|30=NASDAQ|60=20240115-09:30:01.000|39=2|150=F|14=250|6=485.60",
+      "parsed": {
+        "order_id": "ORD009",
+        "symbol": "META",
+        "side": "BUY",
+        "quantity": 250.0,
+        "price": 485.6,
+        "venue": "NASDAQ",
+        "timestamp": "2024-01-15T09:30:01",
+        "fill_type": "FULL",
+        "fix_version": "FIX.4.4",
+        "exec_type": "F",
+        "cum_qty": 250.0,
+        "avg_px": 485.6
+      }
+    },
+    {
+      "id": "MSG010",
+      "category": "good",
+      "expected_score_range": "8-10",
+      "raw_message": "8=FIX.4.4|35=8|37=ORD010|55=TSLA|54=2|32=100|31=225.40|30=NASDAQ|60=20240115-15:59:00.000|39=2|150=F|14=100|6=225.40",
+      "parsed": {
+        "order_id": "ORD010",
+        "symbol": "TSLA",
+        "side": "SELL",
+        "quantity": 100.0,
+        "price": 225.4,
+        "venue": "NASDAQ",
+        "timestamp": "2024-01-15T15:59:00",
+        "fill_type": "FULL",
+        "fix_version": "FIX.4.4",
+        "exec_type": "F",
+        "cum_qty": 100.0,
+        "avg_px": 225.4
+      }
+    },
+    {
+      "id": "MSG011",
+      "category": "good",
+      "expected_score_range": "8-10",
+      "raw_message": "8=FIX.4.4|35=8|37=ORD011|55=AMD|54=1|32=500|31=155.25|30=ARCA|60=20240115-10:30:00.000|39=2|150=F|14=500|6=155.25",
+      "parsed": {
+        "order_id": "ORD011",
+        "symbol": "AMD",
+        "side": "BUY",
+        "quantity": 500.0,
+        "price": 155.25,
+        "venue": "ARCA",
+        "timestamp": "2024-01-15T10:30:00",
+        "fill_type": "FULL",
+        "fix_version": "FIX.4.4",
+        "exec_type": "F",
+        "cum_qty": 500.0,
+        "avg_px": 155.25
+      }
+    },
+    {
+      "id": "MSG012",
+      "category": "good",
+      "expected_score_range": "8-10",
+      "raw_message": "8=FIX.4.4|35=8|37=ORD012|55=INTC|54=1|32=1000|31=45.80|30=ARCA|60=20240115-11:15:30.000|39=2|150=F|14=1000|6=45.80",
+      "parsed": {
+        "order_id": "ORD012",
+        "symbol": "INTC",
+        "side": "BUY",
+        "quantity": 1000.0,
+        "price": 45.8,
+        "venue": "ARCA",
+        "timestamp": "2024-01-15T11:15:30",
+        "fill_type": "FULL",
+        "fix_version": "FIX.4.4",
+        "exec_type": "F",
+        "cum_qty": 1000.0,
+        "avg_px": 45.8
+      }
+    },
+    {
+      "id": "MSG013",
+      "category": "good",
+      "expected_score_range": "8-10",
+      "raw_message": "8=FIX.4.4|35=8|37=ORD013|55=CRM|54=2|32=80|31=295.40|30=NASDAQ|60=20240115-14:00:00.000|39=2|150=F|14=80|6=295.40",
+      "parsed": {
+        "order_id": "ORD013",
+        "symbol": "CRM",
+        "side": "SELL",
+        "quantity": 80.0,
+        "price": 295.4,
+        "venue": "NASDAQ",
+        "timestamp": "2024-01-15T14:00:00",
+        "fill_type": "FULL",
+        "fix_version": "FIX.4.4",
+        "exec_type": "F",
+        "cum_qty": 80.0,
+        "avg_px": 295.4
+      }
+    },
+    {
+      "id": "MSG014",
+      "category": "good",
+      "expected_score_range": "8-10",
+      "raw_message": "8=FIX.4.4|35=8|37=ORD014|55=ORCL|54=1|32=600|31=125.75|30=NYSE|60=20240115-12:30:00.000|39=2|150=F|14=600|6=125.75",
+      "parsed": {
+        "order_id": "ORD014",
+        "symbol": "ORCL",
+        "side": "BUY",
+        "quantity": 600.0,
+        "price": 125.75,
+        "venue": "NYSE",
+        "timestamp": "2024-01-15T12:30:00",
+        "fill_type": "FULL",
+        "fix_version": "FIX.4.4",
+        "exec_type": "F",
+        "cum_qty": 600.0,
+        "avg_px": 125.75
+      }
+    },
+    {
+      "id": "MSG015",
+      "category": "good",
+      "expected_score_range": "8-10",
+      "raw_message": "8=FIX.4.4|35=8|37=ORD015|55=ADBE|54=1|32=40|31=575.90|30=NASDAQ|60=20240115-10:45:00.000|39=2|150=F|14=40|6=575.90",
+      "parsed": {
+        "order_id": "ORD015",
+        "symbol": "ADBE",
+        "side": "BUY",
+        "quantity": 40.0,
+        "price": 575.9,
+        "venue": "NASDAQ",
+        "timestamp": "2024-01-15T10:45:00",
+        "fill_type": "FULL",
+        "fix_version": "FIX.4.4",
+        "exec_type": "F",
+        "cum_qty": 40.0,
+        "avg_px": 575.9
+      }
+    },
+    {
+      "id": "MSG016",
+      "category": "average",
+      "expected_score_range": "5-7",
+      "raw_message": "8=FIX.4.4|35=8|37=ORD016|55=AAPL|54=1|32=500|31=185.55|30=NASDAQ|60=20240115-10:00:00.000|39=1|150=F|14=500|6=185.55",
+      "parsed": {
+        "order_id": "ORD016",
+        "symbol": "AAPL",
+        "side": "BUY",
+        "quantity": 500.0,
+        "price": 185.55,
+        "venue": "NASDAQ",
+        "timestamp": "2024-01-15T10:00:00",
+        "fill_type": "PARTIAL",
+        "fix_version": "FIX.4.4",
+        "exec_type": "F",
+        "cum_qty": 500.0,
+        "avg_px": 185.55
+      }
+    },
+    {
+      "id": "MSG017",
+      "category": "average",
+      "expected_score_range": "5-7",
+      "raw_message": "8=FIX.4.4|35=8|37=ORD017|55=AAPL|54=1|32=300|31=185.60|30=NASDAQ|60=20240115-10:00:05.000|39=1|150=F|14=800|6=185.57",
+      "parsed": {
+        "order_id": "ORD017",
+        "symbol": "AAPL",
+        "side": "BUY",
+        "quantity": 300.0,
+        "price": 185.6,
+        "venue": "NASDAQ",
+        "timestamp": "2024-01-15T10:00:05",
+        "fill_type": "PARTIAL",
+        "fix_version": "FIX.4.4",
+        "exec_type": "F",
+        "cum_qty": 800.0,
+        "avg_px": 185.57
+      }
+    },
+    {
+      "id": "MSG018",
+      "category": "average",
+      "expected_score_range": "5-7",
+      "raw_message": "8=FIX.4.4|35=8|37=ORD018|55=AAPL|54=1|32=200|31=185.65|30=NASDAQ|60=20240115-10:00:12.000|39=2|150=F|14=1000|6=185.58",
+      "parsed": {
+        "order_id": "ORD018",
+        "symbol": "AAPL",
+        "side": "BUY",
+        "quantity": 200.0,
+        "price": 185.65,
+        "venue": "NASDAQ",
+        "timestamp": "2024-01-15T10:00:12",
+        "fill_type": "FULL",
+        "fix_version": "FIX.4.4",
+        "exec_type": "F",
+        "cum_qty": 1000.0,
+        "avg_px": 185.58
+      }
+    },
+    {
+      "id": "MSG019",
+      "category": "average",
+      "expected_score_range": "5-7",
+      "raw_message": "8=FIX.4.4|35=8|37=ORD019|55=BA|54=1|32=100|31=225.30|30=EDGX|60=20240115-10:30:00.000|39=2|150=F|14=100|6=225.30",
+      "parsed": {
+        "order_id": "ORD019",
+        "symbol": "BA",
+        "side": "BUY",
+        "quantity": 100.0,
+        "price": 225.3,
+        "venue": "EDGX",
+        "timestamp": "2024-01-15T10:30:00",
+        "fill_type": "FULL",
+        "fix_version": "FIX.4.4",
+        "exec_type": "F",
+        "cum_qty": 100.0,
+        "avg_px": 225.3
+      }
+    },
+    {
+      "id": "MSG020",
+      "category": "average",
+      "expected_score_range": "5-7",
+      "raw_message": "8=FIX.4.4|35=8|37=ORD020|55=DIS|54=2|32=200|31=115.80|30=BATS|60=20240115-11:00:00.000|39=2|150=F|14=200|6=115.80",
+      "parsed": {
+        "order_id": "ORD020",
+        "symbol": "DIS",
+        "side": "SELL",
+        "quantity": 200.0,
+        "price": 115.8,
+        "venue": "BATS",
+        "timestamp": "2024-01-15T11:00:00",
+        "fill_type": "FULL",
+        "fix_version": "FIX.4.4",
+        "exec_type": "F",
+        "cum_qty": 200.0,
+        "avg_px": 115.8
+      }
+    },
+    {
+      "id": "MSG021",
+      "category": "average",
+      "expected_score_range": "5-7",
+      "raw_message": "8=FIX.4.4|35=8|37=ORD021|55=NFLX|54=1|32=50|31=485.20|30=IEX|60=20240115-11:30:00.000|39=2|150=F|14=50|6=485.20",
+      "parsed": {
+        "order_id": "ORD021",
+        "symbol": "NFLX",
+        "side": "BUY",
+        "quantity": 50.0,
+        "price": 485.2,
+        "venue": "IEX",
+        "timestamp": "2024-01-15T11:30:00",
+        "fill_type": "FULL",
+        "fix_version": "FIX.4.4",
+        "exec_type": "F",
+        "cum_qty": 50.0,
+        "avg_px": 485.2
+      }
+    },
+    {
+      "id": "MSG022",
+      "category": "average",
+      "expected_score_range": "5-7",
+      "raw_message": "8=FIX.4.4|35=8|37=ORD022|55=KO|54=1|32=500|31=59.45|30=NYSE|60=20240115-12:00:00.000|39=2|150=F|14=500|6=59.45",
+      "parsed": {
+        "order_id": "ORD022",
+        "symbol": "KO",
+        "side": "BUY",
+        "quantity": 500.0,
+        "price": 59.45,
+        "venue": "NYSE",
+        "timestamp": "2024-01-15T12:00:00",
+        "fill_type": "FULL",
+        "fix_version": "FIX.4.4",
+        "exec_type": "F",
+        "cum_qty": 500.0,
+        "avg_px": 59.45
+      }
+    },
+    {
+      "id": "MSG023",
+      "category": "average",
+      "expected_score_range": "5-7",
+      "raw_message": "8=FIX.4.4|35=8|37=ORD023|55=PEP|54=2|32=300|31=172.80|30=NASDAQ|60=20240115-12:30:00.000|39=2|150=F|14=300|6=172.80",
+      "parsed": {
+        "order_id": "ORD023",
+        "symbol": "PEP",
+        "side": "SELL",
+        "quantity": 300.0,
+        "price": 172.8,
+        "venue": "NASDAQ",
+        "timestamp": "2024-01-15T12:30:00",
+        "fill_type": "FULL",
+        "fix_version": "FIX.4.4",
+        "exec_type": "F",
+        "cum_qty": 300.0,
+        "avg_px": 172.8
+      }
+    },
+    {
+      "id": "MSG024",
+      "category": "average",
+      "expected_score_range": "5-7",
+      "raw_message": "8=FIX.4.4|35=8|37=ORD024|55=MCD|54=1|32=150|31=295.60|30=NYSE|60=20240115-13:00:00.000|39=2|150=F|14=150|6=295.60",
+      "parsed": {
+        "order_id": "ORD024",
+        "symbol": "MCD",
+        "side": "BUY",
+        "quantity": 150.0,
+        "price": 295.6,
+        "venue": "NYSE",
+        "timestamp": "2024-01-15T13:00:00",
+        "fill_type": "FULL",
+        "fix_version": "FIX.4.4",
+        "exec_type": "F",
+        "cum_qty": 150.0,
+        "avg_px": 295.6
+      }
+    },
+    {
+      "id": "MSG025",
+      "category": "average",
+      "expected_score_range": "5-7",
+      "raw_message": "8=FIX.4.4|35=8|37=ORD025|55=UNH|54=1|32=100|31=525.80|30=NYSE|60=20240115-10:15:00.000|39=2|150=F|14=100|6=525.80",
+      "parsed": {
+        "order_id": "ORD025",
+        "symbol": "UNH",
+        "side": "BUY",
+        "quantity": 100.0,
+        "price": 525.8,
+        "venue": "NYSE",
+        "timestamp": "2024-01-15T10:15:00",
+        "fill_type": "FULL",
+        "fix_version": "FIX.4.4",
+        "exec_type": "F",
+        "cum_qty": 100.0,
+        "avg_px": 525.8
+      }
+    },
+    {
+      "id": "MSG026",
+      "category": "average",
+      "expected_score_range": "5-7",
+      "raw_message": "8=FIX.4.4|35=8|37=ORD026|55=HD|54=2|32=200|31=355.40|30=NYSE|60=20240115-10:45:00.000|39=2|150=F|14=200|6=355.40",
+      "parsed": {
+        "order_id": "ORD026",
+        "symbol": "HD",
+        "side": "SELL",
+        "quantity": 200.0,
+        "price": 355.4,
+        "venue": "NYSE",
+        "timestamp": "2024-01-15T10:45:00",
+        "fill_type": "FULL",
+        "fix_version": "FIX.4.4",
+        "exec_type": "F",
+        "cum_qty": 200.0,
+        "avg_px": 355.4
+      }
+    },
+    {
+      "id": "MSG027",
+      "category": "average",
+      "expected_score_range": "5-7",
+      "raw_message": "8=FIX.4.4|35=8|37=ORD027|55=WMT|54=1|32=400|31=162.30|30=NYSE|60=20240115-11:15:00.000|39=2|150=F|14=400|6=162.30",
+      "parsed": {
+        "order_id": "ORD027",
+        "symbol": "WMT",
+        "side": "BUY",
+        "quantity": 400.0,
+        "price": 162.3,
+        "venue": "NYSE",
+        "timestamp": "2024-01-15T11:15:00",
+        "fill_type": "FULL",
+        "fix_version": "FIX.4.4",
+        "exec_type": "F",
+        "cum_qty": 400.0,
+        "avg_px": 162.3
+      }
+    },
+    {
+      "id": "MSG028",
+      "category": "average",
+      "expected_score_range": "5-7",
+      "raw_message": "8=FIX.4.4|35=8|37=ORD028|55=COST|54=1|32=25|31=705.50|30=NASDAQ|60=20240115-14:00:00.000|39=1|150=F|14=25|6=705.50",
+      "parsed": {
+        "order_id": "ORD028",
+        "symbol": "COST",
+        "side": "BUY",
+        "quantity": 25.0,
+        "price": 705.5,
+        "venue": "NASDAQ",
+        "timestamp": "2024-01-15T14:00:00",
+        "fill_type": "PARTIAL",
+        "fix_version": "FIX.4.4",
+        "exec_type": "F",
+        "cum_qty": 25.0,
+        "avg_px": 705.5
+      }
+    },
+    {
+      "id": "MSG029",
+      "category": "average",
+      "expected_score_range": "5-7",
+      "raw_message": "8=FIX.4.4|35=8|37=ORD029|55=COST|54=1|32=25|31=705.75|30=NASDAQ|60=20240115-14:00:30.000|39=1|150=F|14=50|6=705.62",
+      "parsed": {
+        "order_id": "ORD029",
+        "symbol": "COST",
+        "side": "BUY",
+        "quantity": 25.0,
+        "price": 705.75,
+        "venue": "NASDAQ",
+        "timestamp": "2024-01-15T14:00:30",
+        "fill_type": "PARTIAL",
+        "fix_version": "FIX.4.4",
+        "exec_type": "F",
+        "cum_qty": 50.0,
+        "avg_px": 705.62
+      }
+    },
+    {
+      "id": "MSG030",
+      "category": "average",
+      "expected_score_range": "5-7",
+      "raw_message": "8=FIX.4.4|35=8|37=ORD030|55=COST|54=1|32=25|31=706.00|30=NASDAQ|60=20240115-14:01:00.000|39=1|150=F|14=75|6=705.75",
+      "parsed": {
+        "order_id": "ORD030",
+        "symbol": "COST",
+        "side": "BUY",
+        "quantity": 25.0,
+        "price": 706.0,
+        "venue": "NASDAQ",
+        "timestamp": "2024-01-15T14:01:00",
+        "fill_type": "PARTIAL",
+        "fix_version": "FIX.4.4",
+        "exec_type": "F",
+        "cum_qty": 75.0,
+        "avg_px": 705.75
+      }
+    },
+    {
+      "id": "MSG031",
+      "category": "average",
+      "expected_score_range": "5-7",
+      "raw_message": "8=FIX.4.4|35=8|37=ORD031|55=COST|54=1|32=25|31=706.25|30=NASDAQ|60=20240115-14:01:30.000|39=2|150=F|14=100|6=705.87",
+      "parsed": {
+        "order_id": "ORD031",
+        "symbol": "COST",
+        "side": "BUY",
+        "quantity": 25.0,
+        "price": 706.25,
+        "venue": "NASDAQ",
+        "timestamp": "2024-01-15T14:01:30",
+        "fill_type": "FULL",
+        "fix_version": "FIX.4.4",
+        "exec_type": "F",
+        "cum_qty": 100.0,
+        "avg_px": 705.87
+      }
+    },
+    {
+      "id": "MSG032",
+      "category": "average",
+      "expected_score_range": "5-7",
+      "raw_message": "8=FIX.4.4|35=8|37=ORD032|55=PG|54=1|32=300|31=165.20|30=NYSE|60=20240115-15:30:00.000|39=2|150=F|14=300|6=165.20",
+      "parsed": {
+        "order_id": "ORD032",
+        "symbol": "PG",
+        "side": "BUY",
+        "quantity": 300.0,
+        "price": 165.2,
+        "venue": "NYSE",
+        "timestamp": "2024-01-15T15:30:00",
+        "fill_type": "FULL",
+        "fix_version": "FIX.4.4",
+        "exec_type": "F",
+        "cum_qty": 300.0,
+        "avg_px": 165.2
+      }
+    },
+    {
+      "id": "MSG033",
+      "category": "average",
+      "expected_score_range": "5-7",
+      "raw_message": "8=FIX.4.4|35=8|37=ORD033|55=XOM|54=2|32=500|31=105.80|30=NYSE|60=20240115-15:45:00.000|39=2|150=F|14=500|6=105.80",
+      "parsed": {
+        "order_id": "ORD033",
+        "symbol": "XOM",
+        "side": "SELL",
+        "quantity": 500.0,
+        "price": 105.8,
+        "venue": "NYSE",
+        "timestamp": "2024-01-15T15:45:00",
+        "fill_type": "FULL",
+        "fix_version": "FIX.4.4",
+        "exec_type": "F",
+        "cum_qty": 500.0,
+        "avg_px": 105.8
+      }
+    },
+    {
+      "id": "MSG034",
+      "category": "average",
+      "expected_score_range": "5-7",
+      "raw_message": "8=FIX.4.4|35=8|37=ORD034|55=CVX|54=1|32=200|31=155.40|30=NYSE|60=20240115-15:50:00.000|39=2|150=F|14=200|6=155.40",
+      "parsed": {
+        "order_id": "ORD034",
+        "symbol": "CVX",
+        "side": "BUY",
+        "quantity": 200.0,
+        "price": 155.4,
+        "venue": "NYSE",
+        "timestamp": "2024-01-15T15:50:00",
+        "fill_type": "FULL",
+        "fix_version": "FIX.4.4",
+        "exec_type": "F",
+        "cum_qty": 200.0,
+        "avg_px": 155.4
+      }
+    },
+    {
+      "id": "MSG035",
+      "category": "average",
+      "expected_score_range": "5-7",
+      "raw_message": "8=FIX.4.4|35=8|37=ORD035|55=LLY|54=2|32=30|31=725.60|30=NYSE|60=20240115-15:55:00.000|39=2|150=F|14=30|6=725.60",
+      "parsed": {
+        "order_id": "ORD035",
+        "symbol": "LLY",
+        "side": "SELL",
+        "quantity": 30.0,
+        "price": 725.6,
+        "venue": "NYSE",
+        "timestamp": "2024-01-15T15:55:00",
+        "fill_type": "FULL",
+        "fix_version": "FIX.4.4",
+        "exec_type": "F",
+        "cum_qty": 30.0,
+        "avg_px": 725.6
+      }
+    },
+    {
+      "id": "MSG036",
+      "category": "poor",
+      "expected_score_range": "1-4",
+      "raw_message": "8=FIX.4.4|35=8|37=ORD036|55=GME|54=1|32=100|31=15.25|30=NYSE|60=20240115-09:30:00.000|39=1|150=F|14=100|6=15.25",
+      "parsed": {
+        "order_id": "ORD036",
+        "symbol": "GME",
+        "side": "BUY",
+        "quantity": 100.0,
+        "price": 15.25,
+        "venue": "NYSE",
+        "timestamp": "2024-01-15T09:30:00",
+        "fill_type": "PARTIAL",
+        "fix_version": "FIX.4.4",
+        "exec_type": "F",
+        "cum_qty": 100.0,
+        "avg_px": 15.25
+      }
+    },
+    {
+      "id": "MSG037",
+      "category": "poor",
+      "expected_score_range": "1-4",
+      "raw_message": "8=FIX.4.4|35=8|37=ORD037|55=GME|54=1|32=100|31=15.50|30=NYSE|60=20240115-10:00:00.000|39=1|150=F|14=200|6=15.37",
+      "parsed": {
+        "order_id": "ORD037",
+        "symbol": "GME",
+        "side": "BUY",
+        "quantity": 100.0,
+        "price": 15.5,
+        "venue": "NYSE",
+        "timestamp": "2024-01-15T10:00:00",
+        "fill_type": "PARTIAL",
+        "fix_version": "FIX.4.4",
+        "exec_type": "F",
+        "cum_qty": 200.0,
+        "avg_px": 15.37
+      }
+    },
+    {
+      "id": "MSG038",
+      "category": "poor",
+      "expected_score_range": "1-4",
+      "raw_message": "8=FIX.4.4|35=8|37=ORD038|55=GME|54=1|32=100|31=15.75|30=NYSE|60=20240115-11:00:00.000|39=1|150=F|14=300|6=15.50",
+      "parsed": {
+        "order_id": "ORD038",
+        "symbol": "GME",
+        "side": "BUY",
+        "quantity": 100.0,
+        "price": 15.75,
+        "venue": "NYSE",
+        "timestamp": "2024-01-15T11:00:00",
+        "fill_type": "PARTIAL",
+        "fix_version": "FIX.4.4",
+        "exec_type": "F",
+        "cum_qty": 300.0,
+        "avg_px": 15.5
+      }
+    },
+    {
+      "id": "MSG039",
+      "category": "poor",
+      "expected_score_range": "1-4",
+      "raw_message": "8=FIX.4.4|35=8|37=ORD039|55=GME|54=1|32=100|31=16.00|30=NYSE|60=20240115-14:00:00.000|39=2|150=F|14=400|6=15.62",
+      "parsed": {
+        "order_id": "ORD039",
+        "symbol": "GME",
+        "side": "BUY",
+        "quantity": 100.0,
+        "price": 16.0,
+        "venue": "NYSE",
+        "timestamp": "2024-01-15T14:00:00",
+        "fill_type": "FULL",
+        "fix_version": "FIX.4.4",
+        "exec_type": "F",
+        "cum_qty": 400.0,
+        "avg_px": 15.62
+      }
+    },
+    {
+      "id": "MSG040",
+      "category": "poor",
+      "expected_score_range": "1-4",
+      "raw_message": "8=FIX.4.4|35=8|37=ORD040|55=AMC|54=1|32=1000|31=5.85|30=NYSE|60=20240115-10:00:00.000|39=2|150=F|14=1000|6=5.85",
+      "parsed": {
+        "order_id": "ORD040",
+        "symbol": "AMC",
+        "side": "BUY",
+        "quantity": 1000.0,
+        "price": 5.85,
+        "venue": "NYSE",
+        "timestamp": "2024-01-15T10:00:00",
+        "fill_type": "FULL",
+        "fix_version": "FIX.4.4",
+        "exec_type": "F",
+        "cum_qty": 1000.0,
+        "avg_px": 5.85
+      }
+    },
+    {
+      "id": "MSG041",
+      "category": "poor",
+      "expected_score_range": "1-4",
+      "raw_message": "8=FIX.4.4|35=8|37=ORD041|55=BBBY|54=1|32=500|31=0.45|30=NASDAQ|60=20240115-10:30:00.000|39=2|150=F|14=500|6=0.45",
+      "parsed": {
+        "order_id": "ORD041",
+        "symbol": "BBBY",
+        "side": "BUY",
+        "quantity": 500.0,
+        "price": 0.45,
+        "venue": "NASDAQ",
+        "timestamp": "2024-01-15T10:30:00",
+        "fill_type": "FULL",
+        "fix_version": "FIX.4.4",
+        "exec_type": "F",
+        "cum_qty": 500.0,
+        "avg_px": 0.45
+      }
+    },
+    {
+      "id": "MSG042",
+      "category": "poor",
+      "expected_score_range": "1-4",
+      "raw_message": "8=FIX.4.4|35=8|37=ORD042|55=SPY|54=1|32=100|31=475.25|30=EDGX|60=20240115-12:00:00.000|39=2|150=F|14=100|6=475.25",
+      "parsed": {
+        "order_id": "ORD042",
+        "symbol": "SPY",
+        "side": "BUY",
+        "quantity": 100.0,
+        "price": 475.25,
+        "venue": "EDGX",
+        "timestamp": "2024-01-15T12:00:00",
+        "fill_type": "FULL",
+        "fix_version": "FIX.4.4",
+        "exec_type": "F",
+        "cum_qty": 100.0,
+        "avg_px": 475.25
+      }
+    },
+    {
+      "id": "MSG043",
+      "category": "poor",
+      "expected_score_range": "1-4",
+      "raw_message": "8=FIX.4.4|35=8|37=ORD043|55=QQQ|54=2|32=200|31=405.80|30=BATS|60=20240115-12:30:00.000|39=2|150=F|14=200|6=405.80",
+      "parsed": {
+        "order_id": "ORD043",
+        "symbol": "QQQ",
+        "side": "SELL",
+        "quantity": 200.0,
+        "price": 405.8,
+        "venue": "BATS",
+        "timestamp": "2024-01-15T12:30:00",
+        "fill_type": "FULL",
+        "fix_version": "FIX.4.4",
+        "exec_type": "F",
+        "cum_qty": 200.0,
+        "avg_px": 405.8
+      }
+    },
+    {
+      "id": "MSG044",
+      "category": "poor",
+      "expected_score_range": "1-4",
+      "raw_message": "8=FIX.4.4|35=8|37=ORD044|55=SIRI|54=1|32=5000|31=4.25|30=NASDAQ|60=20240115-11:00:00.000|39=2|150=F|14=5000|6=4.25",
+      "parsed": {
+        "order_id": "ORD044",
+        "symbol": "SIRI",
+        "side": "BUY",
+        "quantity": 5000.0,
+        "price": 4.25,
+        "venue": "NASDAQ",
+        "timestamp": "2024-01-15T11:00:00",
+        "fill_type": "FULL",
+        "fix_version": "FIX.4.4",
+        "exec_type": "F",
+        "cum_qty": 5000.0,
+        "avg_px": 4.25
+      }
+    },
+    {
+      "id": "MSG045",
+      "category": "poor",
+      "expected_score_range": "1-4",
+      "raw_message": "8=FIX.4.4|35=8|37=ORD045|55=PLTR|54=2|32=1000|31=18.75|30=NYSE|60=20240115-11:30:00.000|39=2|150=F|14=1000|6=18.75",
+      "parsed": {
+        "order_id": "ORD045",
+        "symbol": "PLTR",
+        "side": "SELL",
+        "quantity": 1000.0,
+        "price": 18.75,
+        "venue": "NYSE",
+        "timestamp": "2024-01-15T11:30:00",
+        "fill_type": "FULL",
+        "fix_version": "FIX.4.4",
+        "exec_type": "F",
+        "cum_qty": 1000.0,
+        "avg_px": 18.75
+      }
+    },
+    {
+      "id": "MSG046",
+      "category": "poor",
+      "expected_score_range": "1-4",
+      "raw_message": "8=FIX.4.4|35=8|37=ORD046|55=VZ|54=1|32=500|31=42.30|30=NYSE|60=20240115-15:58:00.000|39=2|150=F|14=500|6=42.30",
+      "parsed": {
+        "order_id": "ORD046",
+        "symbol": "VZ",
+        "side": "BUY",
+        "quantity": 500.0,
+        "price": 42.3,
+        "venue": "NYSE",
+        "timestamp": "2024-01-15T15:58:00",
+        "fill_type": "FULL",
+        "fix_version": "FIX.4.4",
+        "exec_type": "F",
+        "cum_qty": 500.0,
+        "avg_px": 42.3
+      }
+    },
+    {
+      "id": "MSG047",
+      "category": "poor",
+      "expected_score_range": "1-4",
+      "raw_message": "8=FIX.4.4|35=8|37=ORD047|55=T|54=2|32=800|31=17.85|30=NYSE|60=20240115-15:59:30.000|39=2|150=F|14=800|6=17.85",
+      "parsed": {
+        "order_id": "ORD047",
+        "symbol": "T",
+        "side": "SELL",
+        "quantity": 800.0,
+        "price": 17.85,
+        "venue": "NYSE",
+        "timestamp": "2024-01-15T15:59:30",
+        "fill_type": "FULL",
+        "fix_version": "FIX.4.4",
+        "exec_type": "F",
+        "cum_qty": 800.0,
+        "avg_px": 17.85
+      }
+    },
+    {
+      "id": "MSG048",
+      "category": "poor",
+      "expected_score_range": "1-4",
+      "raw_message": "8=FIX.4.4|35=8|37=ORD048|55=F|54=1|32=200|31=12.05|30=NYSE|60=20240115-10:00:00.000|39=1|150=F|14=200|6=12.05",
+      "parsed": {
+        "order_id": "ORD048",
+        "symbol": "F",
+        "side": "BUY",
+        "quantity": 200.0,
+        "price": 12.05,
+        "venue": "NYSE",
+        "timestamp": "2024-01-15T10:00:00",
+        "fill_type": "PARTIAL",
+        "fix_version": "FIX.4.4",
+        "exec_type": "F",
+        "cum_qty": 200.0,
+        "avg_px": 12.05
+      }
+    },
+    {
+      "id": "MSG049",
+      "category": "poor",
+      "expected_score_range": "1-4",
+      "raw_message": "8=FIX.4.4|35=8|37=ORD049|55=F|54=1|32=300|31=12.25|30=NYSE|60=20240115-12:00:00.000|39=1|150=F|14=500|6=12.17",
+      "parsed": {
+        "order_id": "ORD049",
+        "symbol": "F",
+        "side": "BUY",
+        "quantity": 300.0,
+        "price": 12.25,
+        "venue": "NYSE",
+        "timestamp": "2024-01-15T12:00:00",
+        "fill_type": "PARTIAL",
+        "fix_version": "FIX.4.4",
+        "exec_type": "F",
+        "cum_qty": 500.0,
+        "avg_px": 12.17
+      }
+    },
+    {
+      "id": "MSG050",
+      "category": "poor",
+      "expected_score_range": "1-4",
+      "raw_message": "8=FIX.4.4|35=8|37=ORD050|55=F|54=1|32=500|31=12.50|30=NYSE|60=20240115-15:00:00.000|39=2|150=F|14=1000|6=12.34",
+      "parsed": {
+        "order_id": "ORD050",
+        "symbol": "F",
+        "side": "BUY",
+        "quantity": 500.0,
+        "price": 12.5,
+        "venue": "NYSE",
+        "timestamp": "2024-01-15T15:00:00",
+        "fill_type": "FULL",
+        "fix_version": "FIX.4.4",
+        "exec_type": "F",
+        "cum_qty": 1000.0,
+        "avg_px": 12.34
+      }
+    },
+    {
+      "id": "MSG051",
+      "category": "edge_case",
+      "expected_score_range": "varies",
+      "raw_message": "8=FIX.4.4|35=8|37=ORD051|55=AAPL|54=1|32=100000|31=185.50|30=NYSE|60=20240115-09:30:00.000|39=2|150=F|14=100000|6=185.50",
+      "parsed": {
+        "order_id": "ORD051",
+        "symbol": "AAPL",
+        "side": "BUY",
+        "quantity": 100000.0,
+        "price": 185.5,
+        "venue": "NYSE",
+        "timestamp": "2024-01-15T09:30:00",
+        "fill_type": "FULL",
+        "fix_version": "FIX.4.4",
+        "exec_type": "F",
+        "cum_qty": 100000.0,
+        "avg_px": 185.5
+      }
+    },
+    {
+      "id": "MSG052",
+      "category": "edge_case",
+      "expected_score_range": "varies",
+      "raw_message": "8=FIX.4.4|35=8|37=ORD052|55=BRK.B|54=1|32=7|31=395.25|30=NYSE|60=20240115-10:00:00.000|39=2|150=F|14=7|6=395.25",
+      "parsed": {
+        "order_id": "ORD052",
+        "symbol": "BRK.B",
+        "side": "BUY",
+        "quantity": 7.0,
+        "price": 395.25,
+        "venue": "NYSE",
+        "timestamp": "2024-01-15T10:00:00",
+        "fill_type": "FULL",
+        "fix_version": "FIX.4.4",
+        "exec_type": "F",
+        "cum_qty": 7.0,
+        "avg_px": 395.25
+      }
+    },
+    {
+      "id": "MSG053",
+      "category": "edge_case",
+      "expected_score_range": "varies",
+      "raw_message": "8=FIX.4.2|35=8|37=ORD053|55=IBM|54=2|32=100|31=185.40|30=NYSE|60=20240115-11:00:00.000|39=2",
+      "parsed": {
+        "order_id": "ORD053",
+        "symbol": "IBM",
+        "side": "SELL",
+        "quantity": 100.0,
+        "price": 185.4,
+        "venue": "NYSE",
+        "timestamp": "2024-01-15T11:00:00",
+        "fill_type": "FULL",
+        "fix_version": "FIX.4.2",
+        "exec_type": null,
+        "cum_qty": null,
+        "avg_px": null
+      }
+    },
+    {
+      "id": "MSG054",
+      "category": "edge_case",
+      "expected_score_range": "varies",
+      "raw_message": "8=FIX.4.4|35=8|37=ORD054|55=AAPL|54=1|32=50|31=186.00|30=ARCA|60=20240115-17:30:00.000|39=2|150=F|14=50|6=186.00",
+      "parsed": {
+        "order_id": "ORD054",
+        "symbol": "AAPL",
+        "side": "BUY",
+        "quantity": 50.0,
+        "price": 186.0,
+        "venue": "ARCA",
+        "timestamp": "2024-01-15T17:30:00",
+        "fill_type": "FULL",
+        "fix_version": "FIX.4.4",
+        "exec_type": "F",
+        "cum_qty": 50.0,
+        "avg_px": 186.0
+      }
+    },
+    {
+      "id": "MSG055",
+      "category": "edge_case",
+      "expected_score_range": "varies",
+      "raw_message": "8=FIX.4.4|35=8|37=ORD055|55=TSLA|54=2|32=25|31=224.50|30=ARCA|60=20240115-07:30:00.000|39=2|150=F|14=25|6=224.50",
+      "parsed": {
+        "order_id": "ORD055",
+        "symbol": "TSLA",
+        "side": "SELL",
+        "quantity": 25.0,
+        "price": 224.5,
+        "venue": "ARCA",
+        "timestamp": "2024-01-15T07:30:00",
+        "fill_type": "FULL",
+        "fix_version": "FIX.4.4",
+        "exec_type": "F",
+        "cum_qty": 25.0,
+        "avg_px": 224.5
+      }
+    }
+  ]
+}
