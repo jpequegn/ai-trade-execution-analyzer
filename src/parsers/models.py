@@ -10,12 +10,9 @@ coupled with the FIX parsing logic.
 from __future__ import annotations
 
 from datetime import datetime
-from typing import TYPE_CHECKING
+from typing import Any
 
 from pydantic import BaseModel, Field, field_validator, model_validator
-
-if TYPE_CHECKING:
-    from src.parsers.fix_parser import ExecutionReport
 
 
 class TradeAnalysis(BaseModel):
@@ -99,7 +96,9 @@ class AnalysisResult(BaseModel):
         analyzed_at: Timestamp when analysis was performed.
     """
 
-    execution: ExecutionReport
+    # Use Any type at runtime to avoid circular import issues
+    # The actual type is ExecutionReport from fix_parser.py
+    execution: Any
     analysis: TradeAnalysis
     raw_response: str = Field(
         default="",
@@ -133,3 +132,16 @@ class AnalysisResult(BaseModel):
     )
 
     model_config = {"arbitrary_types_allowed": True}
+
+    @field_validator("execution", mode="before")
+    @classmethod
+    def validate_execution(cls, v: Any) -> Any:
+        """Validate that execution is an ExecutionReport-like object."""
+        # Import here to avoid circular imports
+        from src.parsers.fix_parser import ExecutionReport
+
+        if isinstance(v, ExecutionReport):
+            return v
+        if isinstance(v, dict):
+            return ExecutionReport(**v)
+        raise ValueError(f"Expected ExecutionReport or dict, got {type(v)}")
