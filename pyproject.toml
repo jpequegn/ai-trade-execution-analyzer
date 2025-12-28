@@ -67,6 +67,8 @@ ignore = [
     "E501",   # line too long (handled by formatter)
     "B008",   # do not perform function calls in argument defaults
     "ARG002", # unused method argument (used for API compatibility)
+    "TC001",  # move application import into type-checking block (false positives for runtime imports)
+    "TC003",  # move stdlib import into type-checking block (false positives for runtime imports)
 ]
 
 [tool.ruff.lint.isort]

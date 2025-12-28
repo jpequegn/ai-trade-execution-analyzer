@@ -13,7 +13,7 @@ from __future__ import annotations
 
 import logging
 from dataclasses import dataclass, field
-from pathlib import Path  # noqa: TC003
+from pathlib import Path
 
 from src.evaluation.ground_truth import (
     DATASET_PATH,
