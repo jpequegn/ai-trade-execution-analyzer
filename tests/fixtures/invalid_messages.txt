@@ -1,0 +1,38 @@
+# Invalid FIX messages that should raise errors
+# Format: message|expected_error_type|expected_error_contains
+
+# Missing OrderID (tag 37)
+55=AAPL|54=1|32=100|31=150|60=20240115-10:00:00|FIXMissingFieldError|OrderID
+
+# Missing Symbol (tag 55)
+37=ORD|54=1|32=100|31=150|60=20240115-10:00:00|FIXMissingFieldError|Symbol
+
+# Missing Side (tag 54)
+37=ORD|55=AAPL|32=100|31=150|60=20240115-10:00:00|FIXMissingFieldError|Side
+
+# Missing Quantity (tag 32)
+37=ORD|55=AAPL|54=1|31=150|60=20240115-10:00:00|FIXMissingFieldError|LastQty
+
+# Missing Price (tag 31)
+37=ORD|55=AAPL|54=1|32=100|60=20240115-10:00:00|FIXMissingFieldError|LastPx
+
+# Missing Timestamp (tag 60)
+37=ORD|55=AAPL|54=1|32=100|31=150|FIXMissingFieldError|TransactTime
+
+# Invalid Side value
+37=ORD|55=AAPL|54=3|32=100|31=150|60=20240115-10:00:00|FIXValidationError|Side
+
+# Non-numeric quantity
+37=ORD|55=AAPL|54=1|32=abc|31=150|60=20240115-10:00:00|FIXValidationError|LastQty
+
+# Non-numeric price
+37=ORD|55=AAPL|54=1|32=100|31=xyz|60=20240115-10:00:00|FIXValidationError|LastPx
+
+# Invalid timestamp format
+37=ORD|55=AAPL|54=1|32=100|31=150|60=invalid-time|FIXValidationError|TransactTime
+
+# Empty message
+|FIXParseError|empty
+
+# Whitespace only message
+   |FIXParseError|empty
