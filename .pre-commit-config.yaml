@@ -20,6 +20,7 @@ repos:
     rev: v1.13.0
     hooks:
       - id: mypy
+        files: ^src/
         additional_dependencies:
           - pydantic>=2.9.0
           - types-requests
