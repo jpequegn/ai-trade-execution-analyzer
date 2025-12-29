@@ -9,6 +9,13 @@ Example:
     >>> analyzer = TradeAnalyzer(LLMClient())
     >>> result = analyzer.analyze(execution)
     >>> print(result.analysis.quality_score)
+
+With caching enabled:
+    >>> from src.agents.cache import AnalysisCache
+    >>> cache = AnalysisCache(backend="file", ttl_hours=24)
+    >>> analyzer = TradeAnalyzer(LLMClient(), cache=cache)
+    >>> result = analyzer.analyze(execution)
+    >>> print(f"From cache: {result.from_cache}")
 """
 
 from __future__ import annotations
@@ -20,6 +27,7 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime
 from typing import TYPE_CHECKING
 
+from src.agents.cache import AnalysisCache, generate_cache_key
 from src.agents.llm_client import LLMClient, LLMError
 from src.agents.prompts import (
     PromptVariant,
@@ -64,15 +72,18 @@ class TradeAnalyzer:
     """Analyzer for trade execution quality using LLM.
 
     This class orchestrates the analysis pipeline:
-    1. Validates input ExecutionReport
-    2. Formats prompt with execution data
-    3. Calls LLM with tracing
-    4. Parses structured response
-    5. Returns AnalysisResult with metadata
+    1. Checks cache for existing analysis (if caching enabled)
+    2. Validates input ExecutionReport
+    3. Formats prompt with execution data
+    4. Calls LLM with tracing
+    5. Parses structured response
+    6. Caches result (if caching enabled)
+    7. Returns AnalysisResult with metadata
 
     Attributes:
         client: LLM client for making API calls.
         config: Application configuration.
+        cache: Optional cache for storing analysis results.
         default_variant: Default prompt variant to use.
         max_concurrent: Maximum concurrent analyses for batch processing.
 
@@ -82,12 +93,22 @@ class TradeAnalyzer:
         >>> analyzer = TradeAnalyzer(LLMClient())
         >>> result = analyzer.analyze(execution)
         >>> print(f"Quality: {result.analysis.quality_score}/10")
+
+    With caching:
+        >>> from src.agents.cache import AnalysisCache
+        >>> cache = AnalysisCache(backend="file", ttl_hours=24)
+        >>> analyzer = TradeAnalyzer(LLMClient(), cache=cache)
+        >>> result = analyzer.analyze(execution)
+        >>> # Second call returns cached result
+        >>> result2 = analyzer.analyze(execution)
+        >>> print(f"From cache: {result2.from_cache}")  # True
     """
 
     def __init__(
         self,
         client: LLMClient | None = None,
         config: AppConfig | None = None,
+        cache: AnalysisCache | None = None,
         default_variant: PromptVariant = PromptVariant.DETAILED,
         max_concurrent: int = 5,
     ) -> None:
@@ -96,11 +117,13 @@ class TradeAnalyzer:
         Args:
             client: LLM client for API calls. Creates new client if not provided.
             config: Application configuration. Loads from environment if not provided.
+            cache: Optional cache for storing analysis results.
             default_variant: Default prompt variant for analysis.
             max_concurrent: Maximum concurrent LLM calls for batch processing.
         """
         self.config = config or get_config()
         self.client = client or LLMClient(app_config=self.config)
+        self.cache = cache
         self.default_variant = default_variant
         self.max_concurrent = max_concurrent
 
@@ -110,6 +133,7 @@ class TradeAnalyzer:
         execution: ExecutionReport,
         variant: PromptVariant | None = None,
         session_id: str | None = None,
+        skip_cache: bool = False,
     ) -> AnalysisResult:
         """Analyze a single trade execution.
 
@@ -117,6 +141,7 @@ class TradeAnalyzer:
             execution: The parsed execution report to analyze.
             variant: Prompt variant to use. Defaults to instance default.
             session_id: Optional session ID for tracing grouping.
+            skip_cache: If True, bypass cache lookup and storage.
 
         Returns:
             AnalysisResult containing the analysis and metadata.
@@ -130,6 +155,25 @@ class TradeAnalyzer:
         """
         analysis_id = str(uuid.uuid4())
         variant = variant or self.default_variant
+
+        # Check cache first (if caching enabled and not skipped)
+        cache_key = None
+        if self.cache and not skip_cache:
+            cache_key = generate_cache_key(execution, strategy=self.cache.key_strategy)
+            cached_analysis = self.cache.get(cache_key)
+            if cached_analysis:
+                logger.info(f"Cache hit for order {execution.order_id} (key={cache_key})")
+                return AnalysisResult(
+                    execution=execution,
+                    analysis=cached_analysis,
+                    raw_response="",
+                    tokens_used=0,
+                    latency_ms=0.0,
+                    model="cached",
+                    from_cache=True,
+                    analysis_id=analysis_id,
+                    analyzed_at=datetime.now(),
+                )
 
         logger.info(
             f"Starting analysis for order {execution.order_id} "
@@ -172,6 +216,11 @@ class TradeAnalyzer:
                 analyzed_at=datetime.now(),
             )
 
+            # Cache the result (if caching enabled and not skipped)
+            if self.cache and not skip_cache and cache_key:
+                self.cache.set(cache_key, analysis, execution)
+                logger.debug(f"Cached analysis for order {execution.order_id}")
+
             logger.info(
                 f"Completed analysis for order {execution.order_id}: "
                 f"score={analysis.quality_score}, "
@@ -195,6 +244,16 @@ class TradeAnalyzer:
                 execution=execution,
                 cause=e,
             ) from e
+
+    def get_cache_stats(self) -> dict[str, object] | None:
+        """Get cache statistics if caching is enabled.
+
+        Returns:
+            Cache statistics dictionary or None if caching is disabled.
+        """
+        if self.cache:
+            return self.cache.get_stats().to_dict()
+        return None
 
     @traced(name="analyze_batch", tags=["analysis", "batch"])
     def analyze_batch(
