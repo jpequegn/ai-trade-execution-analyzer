@@ -1,0 +1,177 @@
+name: Evaluation Pipeline
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'src/**'
+      - 'tests/**'
+      - '.github/workflows/evaluation.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'src/**'
+      - 'tests/**'
+      - '.github/workflows/evaluation.yml'
+  workflow_dispatch:
+    inputs:
+      samples:
+        description: 'Comma-separated list of sample IDs to evaluate (empty for all)'
+        required: false
+        default: ''
+      threshold_overall:
+        description: 'Overall quality threshold (0.0-1.0)'
+        required: false
+        default: '0.75'
+
+permissions:
+  contents: read
+  pull-requests: write
+
+env:
+  PYTHON_VERSION: '3.12'
+  UV_VERSION: '0.5.x'
+
+jobs:
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
+        with:
+          version: ${{ env.UV_VERSION }}
+          enable-cache: true
+
+      - name: Set up Python
+        run: uv python install ${{ env.PYTHON_VERSION }}
+
+      - name: Install dependencies
+        run: uv sync --all-extras --dev
+
+      - name: Run linting
+        run: uv run ruff check src/ tests/
+
+      - name: Run type checking
+        run: uv run mypy src/
+
+      - name: Run tests
+        run: uv run pytest tests/ -v --tb=short
+
+  evaluate:
+    name: Run Evaluation
+    runs-on: ubuntu-latest
+    needs: test
+    # Only run evaluation when API key is available (push to main or manual trigger)
+    if: github.event_name != 'pull_request' && (github.event_name == 'workflow_dispatch' || github.ref == 'refs/heads/main')
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v4
+        with:
+          version: ${{ env.UV_VERSION }}
+          enable-cache: true
+
+      - name: Set up Python
+        run: uv python install ${{ env.PYTHON_VERSION }}
+
+      - name: Install dependencies
+        run: uv sync --all-extras --dev
+
+      - name: Check API key availability
+        id: check_keys
+        run: |
+          if [ -z "${{ secrets.ANTHROPIC_API_KEY }}" ]; then
+            echo "has_api_key=false" >> $GITHUB_OUTPUT
+            echo "⚠️ ANTHROPIC_API_KEY not configured - skipping evaluation"
+          else
+            echo "has_api_key=true" >> $GITHUB_OUTPUT
+            echo "✅ API key available"
+          fi
+
+      - name: Run evaluation
+        id: eval
+        if: steps.check_keys.outputs.has_api_key == 'true'
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          LANGFUSE_PUBLIC_KEY: ${{ secrets.LANGFUSE_PUBLIC_KEY }}
+          LANGFUSE_SECRET_KEY: ${{ secrets.LANGFUSE_SECRET_KEY }}
+        run: |
+          # Prepare arguments
+          ARGS=""
+          if [ -n "${{ github.event.inputs.samples }}" ]; then
+            ARGS="$ARGS --samples ${{ github.event.inputs.samples }}"
+          fi
+
+          THRESHOLD="${{ github.event.inputs.threshold_overall }}"
+          if [ -n "$THRESHOLD" ]; then
+            ARGS="$ARGS --threshold overall=$THRESHOLD"
+          fi
+
+          # Run evaluation
+          mkdir -p reports
+          uv run python -m src.evaluation \
+            --output reports/ \
+            --format both \
+            --fail-on-regression \
+            $ARGS \
+            2>&1 | tee evaluation.log
+
+          # Set outputs for PR comment
+          echo "passed=$(jq '.passed' reports/eval_*.json)" >> $GITHUB_OUTPUT
+          echo "failed=$(jq '.failed' reports/eval_*.json)" >> $GITHUB_OUTPUT
+          echo "total=$(jq '.total_samples' reports/eval_*.json)" >> $GITHUB_OUTPUT
+          echo "overall=$(jq '.aggregate_metrics.overall' reports/eval_*.json)" >> $GITHUB_OUTPUT
+
+      - name: Upload evaluation results
+        uses: actions/upload-artifact@v4
+        if: steps.check_keys.outputs.has_api_key == 'true'
+        with:
+          name: evaluation-results
+          path: reports/
+          retention-days: 30
+
+      - name: Check quality thresholds
+        if: steps.check_keys.outputs.has_api_key == 'true'
+        run: |
+          # Read results
+          OVERALL=$(jq '.aggregate_metrics.overall' reports/eval_*.json 2>/dev/null || echo "0")
+          THRESHOLD="${{ github.event.inputs.threshold_overall || '0.75' }}"
+
+          echo "Overall score: $OVERALL"
+          echo "Threshold: $THRESHOLD"
+
+          # Compare using bc for floating point
+          if [ "$(echo "$OVERALL < $THRESHOLD" | bc -l)" -eq 1 ]; then
+            echo "❌ Overall score ($OVERALL) is below threshold ($THRESHOLD)"
+            exit 1
+          else
+            echo "✅ Quality thresholds met"
+          fi
+
+  store-baseline:
+    name: Store Baseline Results
+    runs-on: ubuntu-latest
+    needs: evaluate
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Download evaluation results
+        uses: actions/download-artifact@v4
+        with:
+          name: evaluation-results
+          path: reports/
+
+      - name: Store as baseline
+        uses: actions/upload-artifact@v4
+        with:
+          name: baseline-results
+          path: reports/
+          retention-days: 90
