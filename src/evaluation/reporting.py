@@ -1,21 +1,33 @@
 """Reporting utilities for evaluation results.
 
 This module provides functions to generate markdown and JSON reports
-from evaluation results, with support for run comparisons.
+from evaluation results, with support for run comparisons and human
+agreement tracking.
 
 Example:
     >>> from src.evaluation.reporting import generate_markdown_report
     >>> from src.evaluation.runner import EvalResults
     >>> report = generate_markdown_report(results)
     >>> print(report)
+
+With human agreement metrics:
+    >>> from src.review import FeedbackStore, calculate_agreement_rate
+    >>> store = FeedbackStore()
+    >>> report = generate_markdown_report_with_agreement(results, store.get_all())
 """
 
 from __future__ import annotations
 
 from datetime import datetime
 from pathlib import Path
+from typing import TYPE_CHECKING
 
 from src.evaluation.runner import EvalResults, SingleEvalResult
+
+if TYPE_CHECKING:
+    from collections.abc import Sequence
+
+    from src.review.models import HumanFeedback
 
 
 def generate_markdown_report(
@@ -431,3 +443,142 @@ def format_comparison_report(comparison: dict[str, object]) -> str:
         lines.append("")
 
     return "\n".join(lines)
+
+
+def generate_agreement_section(
+    feedbacks: Sequence[HumanFeedback],
+) -> str:
+    """Generate a markdown section for human agreement metrics.
+
+    Args:
+        feedbacks: List of human feedback to analyze.
+
+    Returns:
+        Markdown-formatted agreement section.
+
+    Example:
+        >>> from src.review import FeedbackStore
+        >>> store = FeedbackStore()
+        >>> section = generate_agreement_section(store.get_all())
+    """
+    from src.review.agreement import calculate_agreement_rate
+    from src.review.disagreements import analyze_disagreements
+
+    lines: list[str] = []
+
+    if not feedbacks:
+        lines.append("## Human Agreement")
+        lines.append("")
+        lines.append("*No human reviews collected yet.*")
+        lines.append("")
+        return "\n".join(lines)
+
+    # Calculate metrics
+    metrics = calculate_agreement_rate(feedbacks)
+    disagreement = analyze_disagreements(feedbacks)
+
+    lines.append("## Human Agreement")
+    lines.append("")
+    lines.append(f"- **Reviews Collected**: {metrics.total_reviews}")
+    lines.append(f"- **Score Agreement**: {metrics.score_agreement_rate:.1%}")
+    lines.append(f"- **Issue Agreement**: {metrics.issue_agreement_rate:.1%}")
+    lines.append(f"- **Overall Agreement**: {metrics.overall_agreement:.1%}")
+    lines.append(f"- **Trend**: {metrics.trend.capitalize()}")
+    lines.append("")
+
+    # Agreement status
+    target = 0.85
+    if metrics.overall_agreement >= target:
+        lines.append(f"✅ **Status**: Meeting target agreement ({target:.0%})")
+    else:
+        lines.append(f"⚠️ **Status**: Below target ({metrics.overall_agreement:.1%} < {target:.0%})")
+    lines.append("")
+
+    # Agreement by score range
+    if metrics.by_score_range:
+        lines.append("### Agreement by Score Range")
+        lines.append("")
+        lines.append("| Score Range | Agreement |")
+        lines.append("|-------------|-----------|")
+        for range_name, rate in metrics.by_score_range.items():
+            status = "✅" if rate >= 0.80 else "⚠️"
+            lines.append(f"| {range_name} | {rate:.1%} {status} |")
+        lines.append("")
+
+    # Areas for improvement
+    if disagreement.actionable_insights:
+        lines.append("### Areas for Improvement")
+        lines.append("")
+        for insight in disagreement.actionable_insights[:5]:
+            lines.append(f"- {insight}")
+        lines.append("")
+
+    # Common missing issues
+    if disagreement.common_missing_issues:
+        lines.append("### Common Missing Issues")
+        lines.append("")
+        for issue, count in disagreement.common_missing_issues[:5]:
+            lines.append(f"- {issue} ({count} occurrences)")
+        lines.append("")
+
+    return "\n".join(lines)
+
+
+def generate_markdown_report_with_agreement(
+    results: EvalResults,
+    feedbacks: Sequence[HumanFeedback],
+    include_failed_details: bool = True,
+    include_all_samples: bool = False,
+    max_failed_samples: int = 20,
+) -> str:
+    """Generate a markdown report including human agreement metrics.
+
+    Args:
+        results: The evaluation results to report.
+        feedbacks: Human feedback for agreement analysis.
+        include_failed_details: Whether to include details of failed samples.
+        include_all_samples: Whether to include all sample results.
+        max_failed_samples: Maximum number of failed samples to show.
+
+    Returns:
+        Markdown-formatted report string with agreement section.
+
+    Example:
+        >>> from src.review import FeedbackStore
+        >>> store = FeedbackStore()
+        >>> report = generate_markdown_report_with_agreement(
+        ...     results, store.get_all()
+        ... )
+    """
+    # Generate base report
+    base_report = generate_markdown_report(
+        results,
+        include_failed_details=include_failed_details,
+        include_all_samples=include_all_samples,
+        max_failed_samples=max_failed_samples,
+    )
+
+    # Generate agreement section
+    agreement_section = generate_agreement_section(feedbacks)
+
+    # Insert agreement section after Summary section
+    report_lines = base_report.split("\n")
+    insert_index = None
+
+    # Find the end of the Summary section
+    for i, line in enumerate(report_lines):
+        if line.startswith("## Aggregate Metrics"):
+            insert_index = i
+            break
+
+    if insert_index is not None:
+        # Insert agreement section before Aggregate Metrics
+        report_lines = (
+            report_lines[:insert_index]
+            + agreement_section.split("\n")
+            + report_lines[insert_index:]
+        )
+        return "\n".join(report_lines)
+
+    # Fallback: append at end
+    return base_report + "\n\n" + agreement_section
